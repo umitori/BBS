@@ -1,6 +1,5 @@
 <?php
-define("dbusername", "debian-sys-maint");
-define("dbpassword", "zPsHNW94dM9V1Zuz");
+require "df.php"
 try {       $servername = "localhost";           
 $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", dbpassword);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -14,7 +13,7 @@ $sql ="CREATE TABLE `forum`.`user` (
   `gender` VARCHAR(4) NOT NULL , 
   `email` VARCHAR(100) NOT NULL , 
   `power` INT(1) NOT NULL , 
-  `self introduction` MEDIUMTEXT NOT NULL , 
+  `self_introduction` MEDIUMTEXT NOT NULL , 
   PRIMARY KEY (`id`))
    ENGINE = InnoDB;"    //创建用户表
  $sql = "CREATE TABLE `forum`.`article` ( 
