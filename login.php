@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start(); ?>
 <html>
 <head>
 <meta charset="utf-8">
@@ -56,3 +57,5 @@ function login(){
 </form>
 
 
+</body>
+</html>

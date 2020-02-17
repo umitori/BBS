@@ -21,18 +21,7 @@
 
   
   
-        $sth = $conn->prepare("INSERT INTO `user`
-                                    ('account','password','userid','gender','email','self intreduction')
-                                    VALUES (:account,:password,:userid,:gender,:email,:self_intreduction)");
-        $sth->bindParam(':account', $account);
-		$sth->bindParam(':userid', $userid);
-		$sth->bindParam(':gender', $gender);
-		$sth->bindParam(':email', $email);
-		$sth->bindParam(':self intreduction', $self_intreduction);
-        $password = md5($password);
-        $sth->bindParam(':password', $password);
-        $sth->execute();
-        echo "注册成功";         //将用户信息插入数据库
+   Signin($account,$password,$userid,$gender,$email,$self_intreduction);  //将用户信息插入数据库
 
-header("Location:login.php");
+
 ?>
