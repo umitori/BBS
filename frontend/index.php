@@ -1,39 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>xx论坛</title>
-
-</head>             
-<div class="top">
-<div class="text">
-      <div class="wenzi"><span style="display:inline-block"><a>首页</a>  ｜  <a>聊天室</a>  ｜  <a>我的主页</a> 
-
-    <form method="post" action="get" >
-      <dt>用户名<input type="text" name="username" class="px vm" tabindex="901" style="width:95px;" />
-       密 码 <input type="password" name="password" class="px vm" tabindex="902" style="width:95px;" />
-
-       <button type="submit" tabindex="904"><em>登录</em></button>
-       <button type="submit" tabindex="904"><em>注册</em></button>
-     </dt>
-</div></span>
-      <input type="hidden" name="quickforward" value="yes" />
-      <input type="hidden" name="handlekey" value="ls" />
-      
-    </form>    
-        
-</div>
-</div>
-
-
-</body>
-</html>
-
-
-
-
-=======
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,29 +75,33 @@
     <script src="data/cache/jquery.js"></script>
     <script src="data/cache/slideshow.js"></script>
     <script>
-        SlideShow(5000, "#slideContainer", "#slidesImgs", "#slideBar");
-        SlideShow(5000, "#slideContainer1", "#slidesImgs1", "#slideBar1");
-        SlideShow(5000, "#slideContainer2", "#slidesImgs2", "#slideBar2");
-        $(function () {
-            $(".user-infor").hover(
-                function () {
-                    $(this).children("ul").show();
-                }, function () {
-                    $(this).children("ul").hide();
-                });
-            $(".hot-site li").each(function () {
-                var $this = $(this);
-                var $siteDate = $this.find(".site-date")
-                var time = $siteDate.html();
-                time = time.substring(2);
-                $siteDate.html(time);
+    SlideShow(5000, "#slideContainer", "#slidesImgs", "#slideBar");
+    SlideShow(5000, "#slideContainer1", "#slidesImgs1", "#slideBar1");
+    SlideShow(5000, "#slideContainer2", "#slidesImgs2", "#slideBar2");
+    $(function() {
+        $(".user-infor").hover(
+            function() {
+                $(this).children("ul").show();
+            },
+            function() {
+                $(this).children("ul").hide();
             });
-            $(".clickAD").bind("click", function () {
-                var identifier = $(this).attr('name');
-                var linkUrl = $(this).attr('href');
-                $.post('/', { identifier: identifier, visitUrl: linkUrl });
+        $(".hot-site li").each(function() {
+            var $this = $(this);
+            var $siteDate = $this.find(".site-date")
+            var time = $siteDate.html();
+            time = time.substring(2);
+            $siteDate.html(time);
+        });
+        $(".clickAD").bind("click", function() {
+            var identifier = $(this).attr('name');
+            var linkUrl = $(this).attr('href');
+            $.post('/', {
+                identifier: identifier,
+                visitUrl: linkUrl
             });
-        })
+        });
+    })
     </script>
 
 
@@ -142,4 +110,3 @@
 </body>
 
 </html>
->>>>>>> first add
