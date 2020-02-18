@@ -54,7 +54,7 @@ function LoginCheck($_SESSION['useid'])            //登陆状态检查
 	exit();
 }
 
-function GetArticle($userid){            //获取个人文章信息
+function GetArticle($userid){            //获取个人文章信息(用作者查询）
         $sth = $conn->prepare("SELECT * FROM `article` WHERE `author`=:userid)");
         $sth->bindParam(':userid', $userid);
         $sth->execute();
@@ -74,7 +74,7 @@ function DelArticle(){                  //删除博文
 }
 
 
-function Write($title,$content,$author,$now){
+function Write($title,$content,$author,$now){          //发表文章
 	    $sth = $conn->prepare("INSERT INTO `article`
                                     ('title','content','author','subtime')
                                     VALUES (:title,:content,:author,:subtime)");
@@ -93,9 +93,33 @@ else{
 
 } 
 
+
+
+function Paging($_SESSION[userid])
+        {                                                        //分页
+          if ($page){
+			   $page_size=100;     //每页最多显示100条记录
+		       $sth = $conn->prepare("select count(*) as total from article where author = :n order by id desc"; )  
+			   $sth->bindParam(':n', $userid);
+			   $sth->execute();
+			   $message_count=$sth->columnCount();                                          
+			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
+			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
+			   $sthh = $conn->prepare("select id,title from article where author = :m order by id desc limit $offset, $page_size"); 
+			   $sthh->bindParam(':m', $userid);
+			   $sthh->execute();
+			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
+			   $info=$sthh->fetchAll();
+			   return $info,$stop;           //返回每页文章信息和循环停止变量
+		             }	
+		}
 	
-	
-	
+function GetArticle1($file_title){            //获取个人文章信息(用文章题目查询）
+        $sth = $conn->prepare("SELECT * FROM `article` WHERE `title`=:file_title)");
+        $sth->bindParam(':file_title', $file_title);
+        $sth->execute();
+		$result = $sth->fetchAll();
+        return $result ;}
 	
 	
 	

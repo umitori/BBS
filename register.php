@@ -111,5 +111,3 @@ function genderCheck(){
 		</form>
 	</div>
 	</center>
-</body>
-</html>
