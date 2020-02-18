@@ -1,0 +1,74 @@
+body{
+    background:#fbfcfe;
+    font-size:14px;
+	font-family:"Microsoft Yahei";
+    line-height:28px;
+    color:#b1b1b1;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+header{
+    margin: 0 auto;
+    width: 888px;
+    height: 110px;
+}
+
+.wrapper{
+    width: 886px;border: 1px solid #f1f2f2;
+    height: 400px;
+    min-height: 534px;margin:0 auto;
+    background:#fff;
+    position: relative;
+}
+
+.wrapper .title{
+    font-size: 20px;
+    color: #000;height: 120px;line-height: 120px;
+    text-align: center;font-weight: bold;
+}
+.wrapper form{
+    position: relative;
+}
+
+.form_item,.form_button{
+    height: 40px;
+    text-align: center;margin-bottom:15px;
+}
+.form_button{
+    height: 46px;
+    margin:25px auto 75px;
+}
+.form_item input{
+    width: 360px;
+    border: 1px solid #d6d6d6;
+    height: 38px;
+    line-height: 40px;
+    border-radius: 3px;
+    text-indent: 15px;
+}
+
+.form_button input.regButton,.form_button input.subButton{
+    width: 152px;height: 44px;
+    border:1px solid  #d6d6d6;
+    font-size: 16px;text-indent: 0;
+    color: #fff;border-radius: 4px;
+    text-align: center;
+}
+
+.Agreement{
+    width: 726px;
+    height: 486px;
+    border: 8px solid #eaeaea;
+    border-radius: 5px;
+    position: absolute;
+    top: 6%;
+    left: 7%;
+    background: #fff;
+    z-index: 9999;
+    padding: 10px;
+    color: #444;
+}
