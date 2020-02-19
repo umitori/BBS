@@ -25,6 +25,10 @@ $sql ="CREATE TABLE `forum`.`user` (
  PRIMARY KEY (`id`))
  ENGINE = InnoDB;"     //创建文章表
  
+ $sql="ALTER TABLE `article` 
+                ADD `love` INT(100) NOT NULL DEFAULT '0' AFTER `subtime`, 
+				ADD `loveid` VARCHAR(100) NOT NULL AFTER `love`;"            //文章表增加点赞数love和点赞用户loveid两个字段
+ $sql="ALTER TABLE article CHANGE id id INT( 10 ) NOT NULL AUTO_INCREMENT;"
     echo "连接成功";
  }
  
