@@ -129,11 +129,11 @@ LoginCheck($_SESSION['useid']);
                           </tr>
                           <?php 
 							  $i=$i+1;
-							  }while($info)
+							  }while($stop)
 						  ?>
                       </table></td>
                     </tr>
-                  </table></td>
+                  </td>
                 </tr>
 </div>                           //展示个人文章题目，点击跳转文章展示
 
