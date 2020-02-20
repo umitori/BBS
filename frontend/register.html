@@ -4,188 +4,210 @@
 <head>
     <meta charset="utf-8">
     <title>用户注册</title>
+    <script type="text/javascript" src="data/cache/jquery.js"></script>
     <link href="data/css/bootstrap.css" rel="stylesheet" />
     <link href="data/css/login.css" rel="stylesheet" />
+    <link href="data/css/index.css" rel="stylesheet" />
 
 </head>
 
 <body>
     <main id="content">
-        <div class="header">
-            <div class="navbar navbar-expand-md navbar-dark navbar-fixed-top fixed-top">
-                <div class="collapse navbar-collapse nav_wrap">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a id="nav_index" class="nav-link" style="color:rgb(36, 35, 39)">没起名字论坛</a>
-                        </li>
-                        <li class="nav-item"><a id="nav_index" class="nav-link" href="/">首页</a></li>
-                        <li class="nav-item"><a id="nav_share" class="nav-link" href="/">聊天室</a></li>
-                        <li class="nav-item"><a id="nav_question" class="nav-link" href="/">个人主页</a></li>
-                        <li class="nav-item"><a id="nav_blog" class="nav-link" href="/">个人中心</a></li>
-                        <li class="nav-item">
-                            <div id="search_box"><input type="text" id="search" placeholder="搜索您感兴趣的内容"
-                                    value="搜索您感兴趣的内容" /><i class="icon-search fa fa-search"></i></div>
-                        </li>
-                    </ul>
+        <section class="wrapper wrapper_rg">
+            <div class="header">
+                <div class="navbar navbar-expand-md navbar-dark navbar-fixed-top fixed-top">
+                    <div class="collapse navbar-collapse nav_wrap">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a id="nav_index" class="nav-link"
+                                    style="color:#000">没起名字论坛</a>
+                            </li>
+                            <li class="nav-item"><a id="nav_index" class="nav-link" href="/">首页</a></li>
+                            <li class="nav-item"><a id="nav_share" class="nav-link" href="/">聊天室</a></li>
+                            <li class="nav-item"><a id="nav_question" class="nav-link" href="/">个人主页</a></li>
+                            <li class="nav-item"><a id="nav_blog" class="nav-link" href="/">个人中心</a></li>
+                            <li class="nav-item">
+                                <div id="search_box"><input type="text" id="search" placeholder="搜索您感兴趣的内容"
+                                        value="搜索您感兴趣的内容" /><i class="icon-search fa fa-search"></i></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--注册协议弹窗 start-->
+            <div class="Agreement" id="agreementDiv">
+                <h3>网络服务使用协议</h3>
+                <div class="content">
+                    <p>一、 关于本网站通行证服务条款的说明</p>
+                    <p>（一）服务条款的接受
+                        本网站通行证的所有权和运营权归本网站所有。本网站通行证将依照本协议及其随时发布的相关规则或说明提供网络服务。本协议所指的社区服务的具体内容由本网站根据实际情况提供，包括论坛、博客、新闻评论、个人空间等所有本网站为网民提供的网络服务。
+                        在您使用本网站通行证服务前请确实仔细阅读本协议。当您点选同意或定制、使用、接受本网站通行证服务时即视为您已仔细阅读本协议，同意接受本服务条款的所有规范，包括接受本网站通行证对服务条款随时所做的任何修改和补充，并愿受其约束。
+                    </p>
+                    <p>（二）服务条款的修改与变更 本网站通行证有权随时对服务条款进行修改，有权随时变更、中断或终止部分或全部网络服务，并不需对用户或任何第三方负责和为此承担任何责任。
+                        修改后的服务条款一旦公布即有效代替原来的服务条款。您可随时登录本网站通行证查阅最新版服务条款。本网站通行证随时发布的与该服务相关的规则或说明，这些规则或说明均为构成本服务条款的一部分。
+                        用户如果不同意服务条款的修改，可以主动取消已经获得的网络服务；如果用户继续使用网络服务，则视为用户已经接受服务条款的修改。
+                    </p>
+                    <p>二、 关于本网站通行证的使用规则</p>
+                    <p>（一）用户应遵守以下法律及法规 </br>
+                        1、用户应遵守中华人民共和国有关法律、法规，承担一切因您的行为直接或间接引起的法律责任。在任何情况下，本网站通行证认为用户的行为可能违反国家法律、法规，可以在任何时候不经事先通知终止向该用户提供服务。</br>
+                        2、用户如不在国内居住，还应特别注意遵守所在国家和地区所有有关的法律和法规。
+                    </p>
+
+                    <p>（二）用户帐号、密码安全和信息存储</br>
+                        1、用户一旦注册成功，便成为本网站通行证的正式用户，将得到一个密码和帐号。用户有义务保证密码和帐号的安全。每个用户应当对以其用户名进行的所有活动和事件承担全部责任,包括所产生的任何损失或损害。</br>
+                        2、用户不应将其帐号、密码转让或出借予他人使用。如用户发现其帐号遭他人非法使用或存在其它安全问题等情况，应立即通知本网站通行证管理员。因黑客行为或用户的保管疏忽导致帐号、密码遭他人非法使用，本网站通行证不承担任何责任。
+                        如用户违反相关法律法规和本协议各项规定，本网站通行证有权不经通知删除该帐号，并停止为该用户提供相关网络服务。</br>
+                        3、因网络的特殊性和不稳定性，用户需自行保存所发布的任何信息，本网站通行证不对用户所发布信息的删除或储存失败承担任何责任。
+                    </p>
+                    <p>（三）本网站通行证禁止的行为
+                        用户在本网站通行证发布信息时，必须遵守国家有关法律规定，并承担一切因自己发布信息不当导致的民事、行政或刑事法律责任。用户在本网站通行证所发布的信息，不得含有以下内容：</br>
+                        1、违反宪法所确定的基本原则的；含有法律、行政法规禁止的其他内容的； </br>2、危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；
+                        </br>3、损害国家荣誉和利益的，攻击党和政府及其领导人的；</br>
+                        4、煽动民族仇恨、民族歧视，破坏民族团结的；</br> 5、煽动非法集会、结社、游行、示威、聚众扰乱社会秩序的，以非法民间组织名义活动的；</br>
+                        6、破坏国家宗教政策，宣扬邪教和封建迷信的； </br>7、散布谣言或未经证实的消息，扰乱社会秩序，破坏社会稳定的；
+                        </br>8、散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；</br>
+                        9、违背中华民族传统美德、社会公德、伦理道德、以及社会主义精神文明的； </br>10、宣扬种族歧视，破坏国家、民族、地区团结的言论和消息的；</br>
+                        11、侵犯他人肖像权、姓名权、名誉权、隐私权或其他人身权利的；
+                        </br>12、恶意重复、大量发布各种信息的； </br>13、未经同意，张贴任何形式广告的；
+                        </br>14、利用本服务进行故意制作、传播计算机病毒等破坏性程序，或针对本服务、与本服务连接的服务器或网络制造干扰、混乱的；
+                        </br>15、发布信息时，任何人不得以任何原因对任何一位用户或公民进行人身攻击、侮辱、谩骂、诋毁、中伤、恐吓等。不得侵害他人合法权益；
+                        如用户在发布信息时，不能履行和遵守协议中的规定，本网站有权修改、删除用户发布的任何信息，并有权对违反协议的用户做出封禁ID，或暂时、永久禁止在本网站发布信息的处理，同时保留依法追究当事人法律责任的权利，本网站通行证的系统记录将作为用户违反法律的证据。
+                    </p>
+                    <p>三、关于社区用户的隐私权</p>
+                    <p>用户在遵守上述协议的前提下，本网站通行证将充分保护用户享有个人隐私。本网站通行证会对用户的个人信息严格保密，不会在未经合法用户授权时，公开、编辑或透露其个人信息及保存在本网站通行证中的非公开内容，下列情况除外：</br>
+                        1、违反相关法律法规或本网站通行证服务协议规定； </br>2、按照相关政府主管部门的要求，有必要向相关法律部门提供备案的内容；
+                        </br>3、维护社会个体和公众的权利、财产或人身安全；</br>
+                        4、被侵害的第三人提出权利主张；</br> 5、为维护用户及社会公共利益的需要； </br>6、维护本网站的合法权益； </br>7、事先获得用户的明确授权；
+                        8、符合其它相关的要求。
+                    </p>
+                    <p>四、关于本网站通行证的知识产权及其他相关权利</p>
+                    <p>1、对于用户上传到本网站通行证上可公开获取区域的任何内容，用户同意授予本网站通行证在全世界范围内永久性的、不可撤销的、免费的、非独家的和再许可的权利和许可，本网站通行证可以使用、复制、修改、改编、出版、翻译、据以创作衍生作品、传播、表演和展示此等内容的全部或部分，和将此等内容的全部或部分编入其他任何形式的作品、媒体或技术中。</br>
+                        2、本网站通行证的文字、软件、声音、图片、设计图样等及在邮件信息、广告中的全部内容和标识包括“本网站通行证”及相关图形标识，均受版权、商标和专利等其它财产所有权法律的保护。所以，未经本网站通行证或相关权利人授权许可，不能擅自复制、发布、转载、播放、改编、汇编或以其它方式使用这些内容或将该内容用于其它任何商业目的。</br>3、用户必须保证，上传的照片、文字、音乐以及视频等作品之著作权已获得合法授权，在本网站之上传行为未侵犯任何第三方之合法权益。否则，将由该用户承担由此引起的一切法律责任；用户不得将任何内部资料、机密资料、涉及他人隐私资料或侵犯任何人的专利、商标、著作权、商业秘密或其他专属权利之内容加以上载、张贴、或以其它方式传送。
+                    </p>
+                    <p>五、免责声明</p>
+                    <p>1、本服务涉及到互联网及移动通讯等服务，可能会受到各个环节不稳定因素的影响。因此服务存在因上述不可抗力、计算机病毒或黑客攻击、系统不稳定、用户所在位置、用户关机、GSM网络、互联网络、通信线路原因等造成的服务中断或不能满足用户要求的风险。使用本服务的用户须承担以上风险，本网站通行证对服务之及时性、安全性、准确性不作担保，对因此导致用户不能发送和接受阅读消息、或传递错误，个人设定之时效、未予储存或其它问题不承担任何责任。对于不可抗力或非本网站通行证过错原因导致的用户数据损失、丢失或服务停止，本网站通行证将不承担任何责任。
+                        </br>2、本网站通行证无法对用户的使用行为进行全面控制，因此对用户不作任何类型的担保。用户同意对本网站通行证的使用承担全部风险。用户使用经由本服务下载的或取得的任何资料、信息而导致该用户电脑系统损坏或资料流失，其风险自行负担。</br>
+                        3、本网站通行证内设有通往其他网站和网页的链接，但这些网站和网页并非由本网站通行证经营或控制，本网站通行证对其正确性、合法性、正当性不负任何责任。用户启动任何此类链接或网页，离开本网站通行证进入其他网站或网页，所有风险自负；因使用或依赖上述网站或资源所产生的损失或损害，本网站通行证不承担任何责任。
+                        </br>4、用户同意保障和维护本网站通行证及其他用户的利益，如用户使用该服务导致本网站通行证或任何其他第三人造成损失等，用户同意承担一切责任。本网站通行证对用户使用网络服务所产生的任何直接、间接、偶然、特殊及继起的损害不负任何责任。
+                        5、第三方以任何方式进行的使用、修改、演绎、下载或转载信息等可能侵害用户权益的行为，本网站通行证均不承担任何责任。
+                    </p>
+
+                </div>
+                <div class="button">
+                    <button id="agreeBtn" class="box Agree" onclick=""><span>同意</span></button>
+                    <button id="refuseBtn" class="box" onclick="disagree()"><span>不同意</span></button>
+                </div>
+            </div>
+            <!--注册协议弹窗 end-->
+
+            <script language="javascript">
+                function disagree() {
+                    if (confirm("点击确定自动关闭窗口,点击取消返回！"))
+                        self.close();
+                    else {
+                        return;
+                    }
+                }
+                function agree() {
+                    if (accountCheck() && emailCheck() && useridCheck() && pwCheck() && pw1Check() && genderCheck()) {
+                        alert("注册成功！");
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                function accountCheck() {
+                    var act = document.getElementById("name").value;
+                    if (act.match(/^.{6,}$/))
+                        return true;
+                    else
+                        alert("请按要求填写账号！");
+                }
+                function useridCheck() {
+                    var na = document.getElementById("name").value;
+                    if (na.match(/^\w{5,14}$/))
+                        return true;
+                    else
+                        alert("请按要求填写用户名！");
+                }
+                function emailCheck() {
+                    var ema = document.getElementById("email").value;
+                    if ((/^\w+@\w+(.\w+){1,2}$/).test(ema))
+                        return true;
+                    else
+                        alert("你的邮箱格式有误,请重新输入！");
+                }
+                function pwCheck() {
+                    var mi = document.getElementById("mima1").value;
+                    if (mi.match(/^.{6,}$/))
+                        return true;
+                    else
+                        alert("请按要求输入密码！不少于6位");
+                }
+                function pw1Check() {
+                    if (document.getElementById("mima1").value == document.getElementById("mima2").value)
+                        return true;
+                    else
+                        alert("两次密码输入不一致！");
+                }
+
+            </script>
+
+            <h1 class="title">注册帐号</h1>
+
+            <form action="registercl.php" method="POST" onsubmit="return agree();" class="form_rg" id="registerForm">
+                <div class="form_item_rg">
+                    <span style="background-position:42px center">昵称</span>
+                    <input class="tr_nickName flex-1" name='userid' type='text' onchange="useridCheck();" />
+                </div>
+                <div class="form_item_rg">
+                    <span style="background-position:42px center">邮箱</span>
+                    <input class="tr_account flex-1" name='email' type='text' onchange="emailCheck();" />
+                </div>
+                <div class="form_item_rg">
+                    <span style="background-position:42px center">账号</span>
+                    <input class="tr_account flex-1" name='account' type='text' placeholder="由字母、数字、下划线组成(5-14位)"
+                        tabindex="1" maxlength="16" onchange="accountCheck();" />
+                </div>
+                <div class="form_item_rg">
+                    <span style="background-position:42px center">密码</span>
+                    <input class="tr_password flex-1" name='password' type='password' maxlength="16"
+                        placeholder="请输入6-16位数字、字母或常用符号，区分大小写" tabindex="3" onchange="pwCheck();" />
+
+                </div>
+                <div class="form_item_rg">
+                    <span style="background-position:16px center">确认密码</span>
+                    <input class="tr_password_ag flex-1" name='password' type='password' maxlength="16"
+                        placeholder="再次输入密码" tabindex="4" onchange="pw1Check();" />
+                </div>
+                <div class="form_item_rg">
+                    <span style="background-position:42px center">介绍</span>
+                    <input type="text" id="sfi" name="sfi" onchange="sfiCheck();" />
                 </div>
 
-            </div>
-        </div>
+                <div class="form_button_rg">
+                    <input type="button" class="subButton_rg_not" value="注册" tabindex="8" id="registerBtn">
+                </div>
 
-        <!--注册协议弹窗 start-->
-        <div class="Agreement" id="agreementDiv">
-            <h3>网络服务使用协议</h3>
-            <div class="content">
-                <p>一、 关于本网站通行证服务条款的说明</p>
-                <p>（一）服务条款的接受
-                    本网站通行证的所有权和运营权归本网站所有。本网站通行证将依照本协议及其随时发布的相关规则或说明提供网络服务。本协议所指的社区服务的具体内容由本网站根据实际情况提供，包括论坛、博客、新闻评论、个人空间等所有本网站为网民提供的网络服务。
-                    在您使用本网站通行证服务前请确实仔细阅读本协议。当您点选同意或定制、使用、接受本网站通行证服务时即视为您已仔细阅读本协议，同意接受本服务条款的所有规范，包括接受本网站通行证对服务条款随时所做的任何修改和补充，并愿受其约束。
-                </p>
-                <p>（二）服务条款的修改与变更 本网站通行证有权随时对服务条款进行修改，有权随时变更、中断或终止部分或全部网络服务，并不需对用户或任何第三方负责和为此承担任何责任。
-                    修改后的服务条款一旦公布即有效代替原来的服务条款。您可随时登录本网站通行证查阅最新版服务条款。本网站通行证随时发布的与该服务相关的规则或说明，这些规则或说明均为构成本服务条款的一部分。
-                    用户如果不同意服务条款的修改，可以主动取消已经获得的网络服务；如果用户继续使用网络服务，则视为用户已经接受服务条款的修改。
-                </p>
-                <p>二、 关于本网站通行证的使用规则</p>
-                <p>（一）用户应遵守以下法律及法规 </br>
-                    1、用户应遵守中华人民共和国有关法律、法规，承担一切因您的行为直接或间接引起的法律责任。在任何情况下，本网站通行证认为用户的行为可能违反国家法律、法规，可以在任何时候不经事先通知终止向该用户提供服务。</br>
-                    2、用户如不在国内居住，还应特别注意遵守所在国家和地区所有有关的法律和法规。
-                </p>
 
-                <p>（二）用户帐号、密码安全和信息存储</br>
-                    1、用户一旦注册成功，便成为本网站通行证的正式用户，将得到一个密码和帐号。用户有义务保证密码和帐号的安全。每个用户应当对以其用户名进行的所有活动和事件承担全部责任,包括所产生的任何损失或损害。</br>
-                    2、用户不应将其帐号、密码转让或出借予他人使用。如用户发现其帐号遭他人非法使用或存在其它安全问题等情况，应立即通知本网站通行证管理员。因黑客行为或用户的保管疏忽导致帐号、密码遭他人非法使用，本网站通行证不承担任何责任。
-                    如用户违反相关法律法规和本协议各项规定，本网站通行证有权不经通知删除该帐号，并停止为该用户提供相关网络服务。</br>
-                    3、因网络的特殊性和不稳定性，用户需自行保存所发布的任何信息，本网站通行证不对用户所发布信息的删除或储存失败承担任何责任。
-                </p>
-                <p>（三）本网站通行证禁止的行为
-                    用户在本网站通行证发布信息时，必须遵守国家有关法律规定，并承担一切因自己发布信息不当导致的民事、行政或刑事法律责任。用户在本网站通行证所发布的信息，不得含有以下内容：</br>
-                    1、违反宪法所确定的基本原则的；含有法律、行政法规禁止的其他内容的； </br>2、危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；
-                    </br>3、损害国家荣誉和利益的，攻击党和政府及其领导人的；</br>
-                    4、煽动民族仇恨、民族歧视，破坏民族团结的；</br> 5、煽动非法集会、结社、游行、示威、聚众扰乱社会秩序的，以非法民间组织名义活动的；</br>
-                    6、破坏国家宗教政策，宣扬邪教和封建迷信的； </br>7、散布谣言或未经证实的消息，扰乱社会秩序，破坏社会稳定的； </br>8、散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；</br>
-                    9、违背中华民族传统美德、社会公德、伦理道德、以及社会主义精神文明的； </br>10、宣扬种族歧视，破坏国家、民族、地区团结的言论和消息的；</br>
-                    11、侵犯他人肖像权、姓名权、名誉权、隐私权或其他人身权利的；
-                    </br>12、恶意重复、大量发布各种信息的； </br>13、未经同意，张贴任何形式广告的；
-                    </br>14、利用本服务进行故意制作、传播计算机病毒等破坏性程序，或针对本服务、与本服务连接的服务器或网络制造干扰、混乱的；
-                    </br>15、发布信息时，任何人不得以任何原因对任何一位用户或公民进行人身攻击、侮辱、谩骂、诋毁、中伤、恐吓等。不得侵害他人合法权益；
-                    如用户在发布信息时，不能履行和遵守协议中的规定，本网站有权修改、删除用户发布的任何信息，并有权对违反协议的用户做出封禁ID，或暂时、永久禁止在本网站发布信息的处理，同时保留依法追究当事人法律责任的权利，本网站通行证的系统记录将作为用户违反法律的证据。
-                </p>
-                <p>三、关于社区用户的隐私权</p>
-                <p>用户在遵守上述协议的前提下，本网站通行证将充分保护用户享有个人隐私。本网站通行证会对用户的个人信息严格保密，不会在未经合法用户授权时，公开、编辑或透露其个人信息及保存在本网站通行证中的非公开内容，下列情况除外：</br>
-                    1、违反相关法律法规或本网站通行证服务协议规定； </br>2、按照相关政府主管部门的要求，有必要向相关法律部门提供备案的内容； </br>3、维护社会个体和公众的权利、财产或人身安全；</br>
-                    4、被侵害的第三人提出权利主张；</br> 5、为维护用户及社会公共利益的需要； </br>6、维护本网站的合法权益； </br>7、事先获得用户的明确授权；
-                    8、符合其它相关的要求。
-                </p>
-                <p>四、关于本网站通行证的知识产权及其他相关权利</p>
-                <p>1、对于用户上传到本网站通行证上可公开获取区域的任何内容，用户同意授予本网站通行证在全世界范围内永久性的、不可撤销的、免费的、非独家的和再许可的权利和许可，本网站通行证可以使用、复制、修改、改编、出版、翻译、据以创作衍生作品、传播、表演和展示此等内容的全部或部分，和将此等内容的全部或部分编入其他任何形式的作品、媒体或技术中。</br>
-                    2、本网站通行证的文字、软件、声音、图片、设计图样等及在邮件信息、广告中的全部内容和标识包括“本网站通行证”及相关图形标识，均受版权、商标和专利等其它财产所有权法律的保护。所以，未经本网站通行证或相关权利人授权许可，不能擅自复制、发布、转载、播放、改编、汇编或以其它方式使用这些内容或将该内容用于其它任何商业目的。</br>3、用户必须保证，上传的照片、文字、音乐以及视频等作品之著作权已获得合法授权，在本网站之上传行为未侵犯任何第三方之合法权益。否则，将由该用户承担由此引起的一切法律责任；用户不得将任何内部资料、机密资料、涉及他人隐私资料或侵犯任何人的专利、商标、著作权、商业秘密或其他专属权利之内容加以上载、张贴、或以其它方式传送。
-                </p>
-                <p>五、免责声明</p>
-                <p>1、本服务涉及到互联网及移动通讯等服务，可能会受到各个环节不稳定因素的影响。因此服务存在因上述不可抗力、计算机病毒或黑客攻击、系统不稳定、用户所在位置、用户关机、GSM网络、互联网络、通信线路原因等造成的服务中断或不能满足用户要求的风险。使用本服务的用户须承担以上风险，本网站通行证对服务之及时性、安全性、准确性不作担保，对因此导致用户不能发送和接受阅读消息、或传递错误，个人设定之时效、未予储存或其它问题不承担任何责任。对于不可抗力或非本网站通行证过错原因导致的用户数据损失、丢失或服务停止，本网站通行证将不承担任何责任。
-                    </br>2、本网站通行证无法对用户的使用行为进行全面控制，因此对用户不作任何类型的担保。用户同意对本网站通行证的使用承担全部风险。用户使用经由本服务下载的或取得的任何资料、信息而导致该用户电脑系统损坏或资料流失，其风险自行负担。</br>
-                    3、本网站通行证内设有通往其他网站和网页的链接，但这些网站和网页并非由本网站通行证经营或控制，本网站通行证对其正确性、合法性、正当性不负任何责任。用户启动任何此类链接或网页，离开本网站通行证进入其他网站或网页，所有风险自负；因使用或依赖上述网站或资源所产生的损失或损害，本网站通行证不承担任何责任。
-                    </br>4、用户同意保障和维护本网站通行证及其他用户的利益，如用户使用该服务导致本网站通行证或任何其他第三人造成损失等，用户同意承担一切责任。本网站通行证对用户使用网络服务所产生的任何直接、间接、偶然、特殊及继起的损害不负任何责任。
-                    5、第三方以任何方式进行的使用、修改、演绎、下载或转载信息等可能侵害用户权益的行为，本网站通行证均不承担任何责任。
-                </p>
-
-            </div>
-            <div class="button">
-                <button id="agreeBtn" class="box Agree" onclick=""><span>同意</span></button>
-                <button id="refuseBtn" class="box" onclick="disagree()"><span>不同意</span></button>
-            </div>
-        </div>
-        <!--注册协议弹窗 end-->
-
-        <script language="javascript">
-            function disagree() {
-                if (confirm("点击确定自动关闭窗口,点击取消返回！"))
-                    self.close();
-                else {
-                    return;
-                }
-            }
-            function agree() {
-                if (accountCheck() && emailCheck() && useridCheck() && pwCheck() && pw1Check() && genderCheck()) {
-                    alert("注册成功！");
-                    return true;
-                }
-                else
-                    return false;
-            }
-            function accountCheck() {
-                var act = document.getElementById("name").value;
-                if (act.match(/^.{6,}$/))
-                    return true;
-                else
-                    alert("请按要求填写账号！");
-            }
-            function useridCheck() {
-                var na = document.getElementById("name").value;
-                if (na.match(/^\w{5,14}$/))
-                    return true;
-                else
-                    alert("请按要求填写用户名！");
-            }
-            function emailCheck() {
-                var ema = document.getElementById("email").value;
-                if ((/^\w+@\w+(.\w+){1,2}$/).test(ema))
-                    return true;
-                else
-                    alert("你的邮箱格式有误,请重新输入！");
-            }
-            function pwCheck() {
-                var mi = document.getElementById("mima1").value;
-                if (mi.match(/^.{6,}$/))
-                    return true;
-                else
-                    alert("请按要求输入密码！不少于6位");
-            }
-            function pw1Check() {
-                if (document.getElementById("mima1").value == document.getElementById("mima2").value)
-                    return true;
-                else
-                    alert("两次密码输入不一致！");
-            }
-            function genderCheck() {
-                //还不会
-            }
-        </script>
-
-        <h1 class="title">注册帐号</h1>
-
-        <form action="registercl.php" method="POST" onsubmit="return agree();" class="form_rg" id="registerForm">
-            <div class="form_item_rg">
-                <span style="background-position:42px center">用&nbsp;户&nbsp;名：</span><input id="name" type="text"
-                    name="userid" onchange="useridCheck();" /><span
-                    class="s2">&nbsp;&nbsp;(由字母、数字、下划线组成(5-14位))</span><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">电子邮箱：</span><input type="text" id="email" name="email"
-                    onchange="emailCheck();" />><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">设置账号：</span><input type="text" id="account" name="account"
-                    onchange="pwCheck();" /><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">设置密码：</span><input type="password" id="mima1"
-                    name="password" onchange="pwCheck();" /><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">确认密码：</span><input type="password" id="mima2"
-                    name="password" onchange="pw1Check();" /><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">个人介绍：</span><input type="text" id="sfi" name="sfi"
-                    onchange="sfiCheck();" />><br /><br />
-            </div>
-            <div class="form_item_rg">
-                <span style="background-position:42px center">性&nbsp;&nbsp;&nbsp;&nbsp;别：男</span><input type="radio"
-                    name="sex" value="boy" checked="checked" /><span class="s1">女</span><input type="radio" name="sex"
-                    value="girl" /><br /><br />
-            </div>
-
-        </form>
-
+            </form>
+        </section>
     </main>
+    <script type="text/javascript">
+        $(function () {
+            bindEvent();
+        });
+
+        function bindEvent() { 
+                $("#agreeBtn").bind("click", function () {
+
+                    $("#agreementDiv").hide();
+
+                    $("#checkBox").addClass("selected");
+                    $("#registerBtn").attr("class", "subButton_rg");
+                });
+            }
+    </script>
 </body>
 </html>

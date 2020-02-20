@@ -1,7 +1,7 @@
 body{
     background:#fbfcfe;
     font-size:14px;
-	font-family:"Microsoft Yahei";
+	font-family:"Microsoft Yahei,宋体, Verdana, Geneva, sans-serif";
     line-height:28px;
     color:#b1b1b1;
 }
@@ -11,20 +11,21 @@ body{
 .right{
     float: right;
 }
+
 header{
     margin: 0 auto;
     width: 888px;
     height: 110px;
+    background: 0 15px no-repeat;
 }
 
 .wrapper{
     width: 886px;border: 1px solid #f1f2f2;
-    height: 400px;
+    height: 600px;
     min-height: 534px;margin:0 auto;
     background:#fff;
     position: relative;
 }
-
 .wrapper .title{
     font-size: 20px;
     color: #000;height: 120px;line-height: 120px;
@@ -50,13 +51,105 @@ header{
     border-radius: 3px;
     text-indent: 15px;
 }
-
 .form_button input.regButton,.form_button input.subButton{
     width: 152px;height: 44px;
-    border:1px solid  #d6d6d6;
+    border:1px solid #29A7E1;
     font-size: 16px;text-indent: 0;
-    color: #fff;border-radius: 4px;
+    color:#29A7E1;border-radius: 4px;
     text-align: center;
+}
+.form_button input.subButton{
+    background: #29A7E1;
+    color:#fff;margin-left: 50px;
+}
+
+.form_item_rg,.form_button_rg{
+    height: 40px;
+    text-align: right;margin-bottom:15px;
+}
+.form_item_rg{
+    position: relative;
+}
+
+.form_button_rg{
+    height: 46px;
+    margin:25px auto 10px;
+}
+.form_item_rg input{
+    width: 300px;
+    border: 1px solid #d6d6d6;
+    height: 38px;
+    line-height: 40px;
+    border-radius: 3px;
+    text-indent: 15px;
+}
+.form_item_rg input.border_none{
+	border : 0;
+}
+.form_item_rg .tip_show{
+	display :block ! important;
+}
+
+.form_item_rg input.getpassword{
+    width: 100px;
+    float: right;
+    line-height: 24px;
+    /*color: #b1b1b1;*/
+    position: absolute;
+    top: 0;
+    right:0;
+    text-align: left;
+    height: 40px;
+    background: #F8F8F8;
+    /*display: none;*/
+}
+.form_item_rg input.getpassword_not{
+    width: 100px;
+    float: right;
+    line-height: 24px;
+    color: #d6d6d6;
+    position: absolute;
+    top: 0;
+    right:0;
+    text-align: left;
+    height: 40px;
+    background: #F8F8F8;
+
+}
+
+.form_button_rg input.subButton_rg_not{
+    width: 360px;height: 44px;
+    border:1px solid #d6d6d6;
+    font-size: 16px;text-indent: 0;
+    color:#29A7E1;border-radius: 4px;
+    text-align: center;
+}
+.form_button_rg input.subButton_rg_not{
+    background: #d6d6d6;
+    color:#fff;margin-left: 50px;
+}
+
+.form_button_rg input.subButton_rg{
+    /*display: none;*/
+    width: 360px;height: 44px;
+    border:1px solid #29A7E1;
+    font-size: 16px;text-indent: 0;
+    color:#29A7E1;border-radius: 4px;
+    text-align: center;
+    background: #29A7E1;
+    color:#fff;margin-left: 50px;
+}
+
+.form_button_rg input.subButton_rg:hover{
+    background: #29A7E1;border:1px solid #29A7E1;
+}
+
+.wrapper_rg{
+    padding-bottom: 30px;
+}
+.wrapper .form_rg{
+    position: relative;
+    margin-right: 271px;
 }
 
 .Agreement{
@@ -71,4 +164,53 @@ header{
     z-index: 9999;
     padding: 10px;
     color: #444;
+}
+
+.Agreement h3{
+    color: #29A7E1;
+    font-weight: bold;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.Agreement .content{
+    height: 415px;
+    overflow: auto;
+}
+
+.Agreement .content p{
+    font-size: 12px;
+    padding: 5px 0;
+    line-height: 23px;
+}
+.Agreement .button{
+    height: 43px;
+    line-height: 43px;
+    position: relative;
+    bottom: 0;
+    width: 103%;
+    left: -10px;
+    background: #F2F2F2;
+    border-top: 1px solid #CCC;
+    text-align: center;
+}
+
+.Agreement .button .box{
+    vertical-align: middle;
+    overflow: hidden;
+    margin-right: 3px;
+    padding: 0 10px;
+    height: 23px;
+    border: 1px solid #999;
+    cursor: pointer;
+    background: #E5E5E5;
+    -moz-box-shadow: 0 1px 0 #E5E5E5;
+    -webkit-box-shadow: 0 1px 0 #E5E5E5;
+    box-shadow: 0 1px 0 #E5E5E5;
+}
+
+.Agreement .button .Agree{
+    background: #29A7E1;
+    color: #fff;
+    border-color: #29A7E1;
 }

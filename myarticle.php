@@ -6,7 +6,40 @@
 <link href=".css" type="text/css" rel="stylesheet">
 </head>
 
-<body>                //后面再写头文件吧 <?php include("head.php"); ?>
+<body>                //后面再写头文件吧 
+
+<script language="javascript">
+
+$("#abc").click(function(){
+ 
+    $.ajax({
+ 
+        url:"givelike.php",
+ 
+        type:"GET",
+ 
+        data:q=$_SESSION["userid"]&b=$result['title'],
+ 
+        async:true,
+ 
+        success:function(data){
+ 
+            if(data === false){
+ 
+                alert('点赞失败！');location.href='dianzan.php?id=<?php echo $id;?>';
+ 
+            }else{
+ 
+                alert('点赞成功！');$("#s").html(data);
+ 
+            }
+ 
+        }
+ 
+    })
+})                                        
+
+</script>
 
 <div>
      <?php require("userDB.php ");
@@ -30,6 +63,8 @@
             <td colspan="4"><?php echo $result[content]; ?></td> 
             <td><a href="delarticle.php">删除</a></td> </tr> 
    </table>                                                                             //个人文章展示
+   
+    <button id="abc"><?php echo $love_num;?></button>          //点赞按钮(没有输出点赞数）
 </div>
 </body>
 </html>
