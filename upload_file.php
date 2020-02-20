@@ -30,32 +30,34 @@
                   }
                   else {
 
-                        $File_dir="./userimg/$name";
-                        if(!is_dir($File_dir))
-                        {
-                           mkdir($File_dir,0777,1);
-                        }//
+                              $File_dir="./userimg/$name";
+                              if(!is_dir($File_dir))
+                              {
+                                 mkdir($File_dir,0777,1);
+                              }//
 
-                        $Origin_dir="./userimg/origin";
+                              $Origin_dir="./userimg/origin";
 
-                        if(!is_dir($Origin_dir))
-                        {
-                           mkdir($Origin_dir,0777,1);
-                        }
-                        $img_info=getimagesize($tmp_dir);
-                        $width=$img_info[0]; //原图的宽
-                        $height=$img_info[1]; //原图的高
+                              if(!is_dir($Origin_dir))
+                              {
+                                 mkdir($Origin_dir,0777,1);
+                              }
 
-                        $newWidth=$width*0.5;
-                        $newHeight=$height*0.5;
-                        $thumb=imagecreatetruecolor($newWidth, $newHeight);
+                              $img_info=getimagesize($tmp_dir);
+                              $width=$img_info[0]; //原图的宽
+                              $height=$img_info[1]; //原图的高
 
-                        $source=imagecreatefromjpeg($tmp_dir);
+                              $newWidth=$width*0.5;
+                              $newHeight=$height*0.5;
+                              //
+                              $thumb=imagecreatetruecolor($newWidth, $newHeight);
 
-                        imagecopyresized($thumb,$source,0,0,0,0,$newWidth,$newHeight,$width,$height);
-                        imagejpeg($thumb,"./$File_dir/".$name.'_thumb'.$FileExt,100);
+                              $source=imagecreatefromjpeg($tmp_dir);
 
-                        move_uploaded_file($tmp_dir,"./userimg/origin/".$name.$FileExt);
+                              imagecopyresized($thumb,$source,0,0,0,0,$newWidth,$newHeight,$width,$height);
+                              imagejpeg($thumb,"./$File_dir/".$name.'_thumb'.$FileExt,100);
+
+                              move_uploaded_file($tmp_dir,"./userimg/origin/".$name.$FileExt);
 
                   }
 

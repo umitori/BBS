@@ -9,18 +9,20 @@
             $gender = $_POST['sex'];          //性别
             $sfi = $_POST['sfi'];             //个人介绍
 
+
             $conn = new PDO(DB_DSN, DB_USER, DB_PASS);
-            $sth = $conn->prepare("select * from 'user' where 'useid'='$userid");
-            $sth->bindParam(':useid', $userid);
+            $sth = $conn->prepare("select * from user where userid='$userid' ");
+            $sth->bindParam(1, $userid);
             $sth->execute();
             $colcount = $sth->columnCount();
+
             if (!empty($colcount))
              {
                       	echo "该用户名已经存在!";
                       	return;
             }                      //检验用户名是否已经存在
-              //Loginin($account,$password);
-              Signin($account,$password,$userid,$gender,$email,$sfi);  //将用户信息插入数据库
+
+             Signin($account,$password,$userid,$email);  //将用户信息插入数据库
 
 
 ?>

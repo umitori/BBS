@@ -1,6 +1,7 @@
 <?php
 
         require './DB.php';
+        session_start();
         function Loginout()          //退出登陆
         {
                 $_SESSION = array(); //清除SESSION值.
@@ -32,83 +33,75 @@
                             }
                             else
                             {
-                                      $_SESSION["userid"] =$fetch["userid"];
+                                      $_SESSION["id"] =$fetch["id"];
                                       unset($fetch["password"]);
                                       echo "<script>alert('登陆成功！'); </script>";
+
                                       echo "<a href='home.php'>如果跳转失败请点击跳转~~</a>";
                                       header("Refresh:1;url=home.php");
                             }
                 }
             }
-        function Signin($account,$password,$userid,$gender,$email,$sfi)
+        function Signin($account,$password,$userid,$email)
         {                //游客注册
-                   $conn = new PDO(DB_DSN, DB_USER, DB_PASS);
-                	 $sth = $conn->prepare("INSERT INTO user (account,password,userid,gender,email,self introduction)
-                                                    VALUES (:account,:password,:userid,:gender,:email,:sfi)"  );
+                    $pow=0;
+                    $conn = new PDO(DB_DSN, DB_USER, DB_PASS);
+                    $stmt = $conn->prepare("INSERT INTO user (account,password,userid,email,pow)  VALUES(?,?,?,?,?) ");
 
-                    $sth->bindParam(':account', $account);
-                    $sth->bindParam(':password', $password);
-                		$sth->bindParam(':userid', $userid);
-                		$sth->bindParam(':gender', $gender);
-                		$sth->bindParam(':email', $email);
-                		$sth->bindParam(':sfi', $sfi);
+                    $stmt->bindParam(1,$account);
+                    $stmt->bindParam(2,$password);
+                    $stmt->bindParam(3,$userid);
+                    $stmt->bindParam(4,$email);
+                    $stmt->bindParam(5,$pow);
+                    $stmt->execute();
 
-                    $sth->execute();
-                    echo "注册成功";
 
-                //header("Location:login.php");
+                    echo "<script>alert('注册成功！'); </script>";
+                    echo "<a href='login.php'>如果跳转失败请点击跳转~~</a>"   ;
+                    header("Refresh:1;url=login.php");
           }                  //将用户信息插入数据库
+
+        function info_change($id,$account,$password,$userid,$gender,$email,$sfi)
+        {
+                    $conn = new PDO(DB_DSN, DB_USER, DB_PASS);
+                    $sth = $conn->prepare("UPDATE user SET account=? ,password=?,userid=?,gender=?,email=?,sfi=?  where id=? )"  );
+                     $sth->bindParam(1, $account);
+                     $sth->bindParam(2, $password);
+                     $sth->bindParam(3, $userid);
+                     $sth->bindParam(4, $gender);
+                     $sth->bindParam(5, $email);
+                     $sth->bindParam(6, $sfi);
+                    $sth->bindParam(7, $id);
+                    $sth->execute();
+        }
+        function get_info($id)
+        {
+                    $conn = new PDO(DB_DSN, DB_USER, DB_PASS);
+                    $sth=$conn->prepare("select * from user where id='$id'");
+                    $sth->execute();
+                    $inf=$usr->fetch();
+                    //
+        }
 
             //    return $fetch;
             //header("Location:index.php");
 
-/*
 
-function LoginCheck($_SESSION['useid'])            //登陆状态检查
-{
-	if($_SESSION['useid']==""){
-	echo "<script>alert('对不起，请登陆后再进行操作！');window.location.href='index.php';</script>";
-	exit();
-}
-/*
-function GetArticle($userid){            //获取个人文章信息
-        $sth = $conn->prepare("SELECT * FROM `article` WHERE `author`=:userid)");
-        $sth->bindParam(':userid', $userid);
-        $sth->execute();
-		$result = $sth->fetchAll();
-        return $result ;}
+        function LoginCheck()            //登陆状态检查
+        {
+                	if($_SESSION['id']=="")
+                  {
+                            	echo "<script>alert('对不起，请登陆后再进行操作！');window.location.href='login.php';</script>";
+                            	exit();
+                }
+        }
 
+        /*
+        function Ban_Check()
+        {
+                if($_SESSION['pow']=="")
+        }*/
 
-function DelArticle(){                  //删除博文
-	    $sth = $conn->prepare("delete from article where author = :author);
-        $sth->bindParam(':author', $_SESSION['useid']);
-		$sth->execute();
-	    $fetch = $sth->fetch(PDO::FETCH_ASSOC);
-		if($fetch)
-			echo "<script>alert('博客文章已被删除!');location='$_SERVER[HTTP_REFERER]';</script>";
-		else
-           echo "<script>alert('删除失败!');history.go(-1);</script>";
-}
-
-
-function Write($title,$content,$author,$now)
-{or: Call to undefined function Loginin() in /var/www/html/BBS/logincl.php:7 Stack trace: #0 {main} thrown in /var/www/html/BBS/logincl.php on line 7
-	    $sth = $conn->prepare("INSERT INTO `article`
-                                    ('title','content','author','subtime')
-                                    VALUES (:title,:content,:author,:subtime)");
-        $sth->bindParam(':title', $title);
-		$sth->bindParam(':content', $content);
-		$sth->bindParam(':author', $author);
-		$sth->bindParam(':subtime', $now);
-        $sth->execute();
-		$result=$sth->columnCount();
-if($result){
-	echo "<script>alert('文章发表成功!');window.location.href='index.php';</script>";
-}
-else{
-	echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
-}
-*/
 ?>
 
 

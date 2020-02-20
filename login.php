@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <?php session_start(); ?>
 <html>
 									<head>
@@ -8,11 +7,12 @@
 																		<link href=".css" type="text/css" rel="stylesheet">
 									</head>
 									<body>
+									<!--
 																		<script language="javascript">
 																										function disagree()
 																										{
 																																if(confirm("点击确定自动关闭窗口,点击取消返回！"))
-																																{
+																														<<<<<<< HEAD		{
 																																					self.close();
 																																}
 																																else
@@ -56,7 +56,7 @@
 																															return false;
 																										}
 																		</script>
-
+-->
 																		<form action="logincl.php" method="POST"  onsubmit="return login();"  >
 																					<span class="s1">账号：</span><input type="text" id="account" name="account" onchange="accountCheck();" /><br /><br />
 																					<span class="s1">密码：</span><input type="password" id="mima1" name="password" onchange="pwCheck();" /><br /><br />
