@@ -1,4 +1,4 @@
 <?php
-require "userDB.php";
+require "articleDB.php";
 DelArticle();
 ?>
