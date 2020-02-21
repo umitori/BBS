@@ -7,7 +7,7 @@
 
               $tmp_dir=$img['tmp_name'];
 
-              $name=$_SESSION["username"];
+              $name=$_SESSION["id"];
               $typ=$img["type"];
               $File_name=$img["name"];
               $imgsize=$img["size"];
@@ -49,13 +49,14 @@
 
                               $newWidth=$width*0.5;
                               $newHeight=$height*0.5;
+                              $newExt='.jpeg';
                               //
                               $thumb=imagecreatetruecolor($newWidth, $newHeight);
 
                               $source=imagecreatefromjpeg($tmp_dir);
 
                               imagecopyresized($thumb,$source,0,0,0,0,$newWidth,$newHeight,$width,$height);
-                              imagejpeg($thumb,"./$File_dir/".$name.'_thumb'.$FileExt,100);
+                              imagejpeg($thumb,"./$File_dir/".$name.'_thumb'.$newExt,100);
 
                               move_uploaded_file($tmp_dir,"./userimg/origin/".$name.$FileExt);
 
