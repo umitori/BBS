@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>用户注册</title>
+<title>我的文章</title>
 <link href=".css" type="text/css" rel="stylesheet">
 </head>
 
@@ -77,6 +77,7 @@ function com(){
        <tr bgcolor="#FFFFFF"> 
             <td align="center">文章内容</td> 
             <td colspan="4"><?php echo $result[content]; ?></td> 
+			<td><a href="re_content.php?file_title=<?php echo $info[title];?>">修改</a> </td>
             <td><a href="delarticle.php">删除</a></td> </tr> 
    </table>                                                                             //个人文章展示
    
@@ -108,8 +109,16 @@ function com(){
                         <td width="30%"><?php echo $info[datetime]; ?></td> 
                       </tr> 
                       <tr bgcolor="#FFFFFF"> 
-                        <td align="center">评论内容</td> 
-                        <td colspan="4"><?php echo $info[content]; ?></td>  //接着删除是管理员权限，之后写
+                        <td align="center">评论内容</td> 						
+                        <td colspan="4"><?php echo $info[content]; ?></td>  
+                        <td>                                                   //管理员可以删除评论
+						<?php 
+						    if ($_SESSION[pow]==1){
+						?>
+                          <a href="del_comment.php?comment_id=<?php echo $info[id]?>">删除评论</a>
+                        <?php
+									}
+					    ?></td>
                       </tr> 
                     </table>
 				  </td> 

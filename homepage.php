@@ -1,8 +1,9 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>用户注册</title>
+<title>个人主页</title>
 <link href=".css" type="text/css" rel="stylesheet">
 </head>
 
@@ -10,8 +11,9 @@
 
 
 <?php 
-require("userDB.php ");
-LoginCheck($_SESSION['useid']);
+require("articleDB.php ");
+$id=$_SESSION['id'];
+LoginCheck($id);
 ?>                                   //判断是否登陆
 
 <script language="javascript">
@@ -42,36 +44,70 @@ LoginCheck($_SESSION['useid']);
 </script>
 
 <div>
-<form action="creatTopicCl.php" method="POST" name="creatTopic" onsubmit="return uploadCheck();">
+<form action="writecl.php" method="POST" name="creatTopic" onsubmit="return uploadCheck();">
 	主题：<input type="text" name="title" id="topic" size="60"  width="50" onchange="topicCheck();"><br><br>
 	<font style="vertical-align:top">内容：</font><textarea name="content" id="cont" rows="10" cols="50" onchange="contentCheck();">
 	</textarea><br>
-	<input type="submit" name="submit" value="提交" class="sub">       </div>         //发新帖子
+	<input type="submit" name="submit" value="提交" class="sub"> 
+</form>	
+</div>         //发新帖子
 
+<div>  //管理员可以查看所有人帖子
+<?php if ($_SESSION[pow]==1)
+{
+?>
+<table >
+   <?php
+        require "articleDB.php";
+           allPaging();						 
+        if($info){
+           $i=1;}
+        do{
+   ?>
+         <tr>
+           <td> <a href="myarticle.php?file_title=<?php echo $info[title];?>"><?php echo $i."、".$info[id];?><?php echo $i."、".$info[title];?></a> </td>
+         </tr>
+   <?php 
+           $i=$i+1;
+        }while($stop)
+   ?>
+</table>
+<?php
+}
+?>
+</div>
+
+<?php else
+{ 
+?>
 <div>
-                    <tr>
-                  <td >
-                    <tr>
-                      <td><table >
-                          <?php
-						    require "userDB.php";
-							Paging($_SESSION[userid])							 
-						  	if($info){
-							$i=1;
-							do{
-						  ?>
-                          <tr>
-                            <td> <a href="myarticle.php?file_title=<?php echo $info[title];?>"><?php echo $i."、".$info[id];?><?php echo $i."、".$info[title];?></a> </td>
-                          </tr>
-                          <?php 
-							  $i=$i+1;
-							  }while($stop)
-						  ?>
-                      </table></td>
-                    </tr>
-                  </table></td>
-                </tr>
+    <tr>
+        <td >
+            <tr>
+                <td><table >
+                    <?php
+					    require "articleDB.php";
+						Paging($_SESSION[userid]);						 
+					  	if($info){
+						$i=1;}
+						do{
+ 					?>
+                      <tr>
+                        <td> <a href="myarticle.php?file_title=<?php echo $info[title];?>"><?php echo $i."、".$info[id];?><?php echo $i."、".$info[title];?></a> </td>
+                      </tr>
+                    <?php 
+					    $i=$i+1;
+				        }while($stop)
+				    ?>
+                     </table></td>
+            </tr>
+        </td>
+    </tr>
 </div>                           //展示个人文章题目，点击跳转文章展示
+<?php
+}
+?>
+
 
 
 </body>
