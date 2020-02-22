@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <meta charset="utf-8">
 <title>我的文章</title>
 <link href=".css" type="text/css" rel="stylesheet">
@@ -11,34 +12,13 @@
 
 <script language="javascript">
 
-$("#abc").click(function(){
- 
-    $.ajax({
- 
-        url:"givelike.php",
- 
-        type:"GET",
- 
-        data:q=$_SESSION["userid"]&b=$result['title'],
- 
-        async:true,
- 
-        success:function(data){
- 
-            if(data === false){
- 
-                alert('点赞失败！');location.href='dianzan.php?id=<?php echo $id;?>';
- 
-            }else{
- 
-                alert('点赞成功！');$("#s").html(data);
- 
-            }
- 
-        }
- 
-    })
-})                                        
+$(document).ready(function(){
+  $("button").click(function(){
+    $("#div1").load("/givelike.php",q=$_SESSION["userid"]&b=$result['title'],);
+  });
+});
+
+                                     
 function contentCheck(){
 	if(accountCheck()  && pwCheck() ){
 		alert("登陆成功！");
@@ -81,7 +61,7 @@ function com(){
             <td><a href="delarticle.php">删除</a></td> </tr> 
    </table>                                                                             //个人文章展示
    
-    <button id="abc"><?php echo $love_num;?></button>          //点赞按钮(没有输出点赞数）	
+    <button><div id="div1">赞</div></button>        //点赞按钮(没有输出点赞数）	
 </div>
 
 
