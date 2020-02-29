@@ -24,23 +24,21 @@
                 $fetch = $sth->fetch(PDO::FETCH_ASSOC);
 
                 if (empty($fetch))
-                      echo "<script>alert('账号不存在!'); history.go(-1);</script>";
+                      $res= "账号不存在";
                 else
                  {
                            if ($fetch["password"] != $password)
                             {
-                                        echo "<script>alert('用户名或密码错误！'); history.go(-1);</script>";
+                                        $res= "用户名或密码错误";
                             }
                             else
                             {
                                       $_SESSION["id"] =$fetch["id"];
                                       unset($fetch["password"]);
-                                      echo "<script>alert('登陆成功！'); </script>";
-
-                                      echo "<a href='home.php'>如果跳转失败请点击跳转~~</a>";
-                                      header("Refresh:1;url=home.php");
+                                      $res= "登陆成功！";
                             }
                 }
+                return $res;
             }
         function Signin($account,$password,$userid,$email)
         {                //游客注册
@@ -55,10 +53,18 @@
                     $stmt->bindParam(5,$pow);
                     $stmt->execute();
 
+                    $sth = $conn->prepare(" SELECT * FROM user WHERE account=?  ");
+                    $sth->bindParam(1, $account);
+                    $sth->execute();
+                    $fetch = $sth->fetch(PDO::FETCH_ASSOC);
+                    $_SESSION["id"]=$fetch["id"];
+                    $_SESSION["pow"]=$fetch["pow"];
 
-                    echo "<script>alert('注册成功！'); </script>";
-                    echo "<a href='login.php'>如果跳转失败请点击跳转~~</a>"   ;
-                    header("Refresh:1;url=login.php");
+                    $res="注册成功！";
+                    return $res;
+
+                    //echo "<a href='login.php'>如果跳转失败请点击跳转~~</a>"   ;
+                    //header("Refresh:1;url=login.php");
           }                  //将用户信息插入数据库
 
         function info_change($id,$account,$password,$userid,$gender,$email,$sfi)
@@ -134,10 +140,10 @@
         }
         function upload_file()
         {
-              session_start();
               define ("maxsize" ,1024*2000);
 
               $allowedExts =array("image/jpeg","image/jpg","image/png");
+
               $img=$_FILES["userimg"];
 
               $tmp_dir=$img['tmp_name'];

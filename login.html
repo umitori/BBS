@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+				<head>
+				<meta charset="utf-8">
+				<title>用户登陆</title>
+				<link href=".css" type="text/css" rel="stylesheet">
+				</head>
+
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+						window.onload=function()
+						{
+														var bton=document.getElementById("bton1");
+														var inputs=document.getElementsByTagName("input");
+
+														//alert (inputs[0].value);
+													bton.onclick= 	function ( ){
+															$.ajax({
+																											method: "POST",
+																											url:"logincl.php",
+																											data: {
+																																		account: inputs[0].value,
+																																		password: inputs[1].value
+																											},
+																											success :function (result)
+																											{
+																															var obj=JSON.parse(result);
+																																			alert(obj.msg);
+																															//location.href=;
+																											},
+																											error :function(msg)
+																											{
+																														alert(msg);
+																											}
+																					})
+														}
+						}
+</script>
+
+<body>
+		<span class="s1">账号：</span> <input type="text" id="account" name="account" /><br /><br />
+    	<span class="s1">密码：</span> <input type="password" id="password" name="password"/><br /><br />
+			<button id='bton1' >登录</button>
+</body>
