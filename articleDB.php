@@ -121,15 +121,15 @@ else{
 	echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
 }  
 
-function giveLike($title,$title)                                     //点赞
+function giveLike($title,$ip)                                     //点赞
 {
-$sth = $conn->prepare("select loveid from article where title=:title");
-    $sth->bindParam(':title', $title);
+$sth = $conn->prepare("select loveid from article where loveid=:loveid");
+    $sth->bindParam(':loveid', $ip);
     $sth->execute();
-	$fetch = $sth->fetch(PDO::FETCH_ASSOC);
-if(empty($fetch)){                                       //如果没有记录点赞数加一，写入用户数据
-    $sth = $conn->prepare("update article set love=love+1 where title=:title");  
-    $sth->bindParam(':title', $title);
+	$result = $sth->fetch(PDO::FETCH_ASSOC);
+if(empty($result)){                                       //如果没有记录点赞数加一，写入用户数据
+    $sth = $conn->prepare("update article set love=love+1 where title=:title2");  
+    $sth->bindParam(':title2', $title);
     $sth->execute();
 	$sthh = $conn->prepare("insert into article (loveid) values (:id)");  
     $sthh->bindParam(':id', $id);
@@ -144,7 +144,6 @@ if(empty($fetch)){                                       //如果没有记录点
 else{ 
     echo "<script>alert(‘您已经赞过了')</script>"; 
 	}
-
 }
 
 function delComment($id)
