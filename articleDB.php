@@ -48,7 +48,7 @@ else{
 
 } 
 
-function Paging($_SESSION[userid])
+function Paging($userid)
         {                                                        //分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
@@ -85,8 +85,7 @@ function allPaging()                    //管理员看到所有文章题目的�
 		             }	
 		}
 
-function comPaging($title)   //前端发来要评论的文章
-        {                                                        //评论的分页
+function comPaging($title){   //前端发来要评论的文章                                                        //评论的分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
 		       $sth = $conn->prepare("select count(*) as total from comment where articleid = :n order by id desc"; )  
@@ -104,7 +103,7 @@ function comPaging($title)   //前端发来要评论的文章
 		             }	
 		}
 		
-function Write_comment($article,$userid,$content,$datetime){          //发表文章
+function Write_comment($article,$userid,$content,$datetime){          //发表评论
 	    $sth = $conn->prepare("INSERT INTO `comment`
                                     ('article','userid','content','datetime')
                                     VALUES (:article,:userid,:content,:datetime)");
@@ -114,12 +113,13 @@ function Write_comment($article,$userid,$content,$datetime){          //发表�
 		$sth->bindParam(':datetime', $datetime);
         $sth->execute();
 		$result=$sth->columnCount();
-if($result){
-	echo "<script>alert('评论发表成功!');window.location.href='index.php';</script>";
+    if($result){
+	    echo "<script>alert('评论发表成功!');window.location.href='index.php';</script>";
+    }
+    else{
+	    echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
+    }  
 }
-else{
-	echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
-}  
 
 function giveLike($title,$ip)                                     //点赞
 {
