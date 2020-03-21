@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php session_start(); 
+      require("articleDB.php ");
+	  $file_title=$_GET["file_title"];
+	  GetArticle1($file_title);                       //从数据库中获取个人文章信息
+      $_SESSION['articleid']=$result['id'];             //用session储存文章id信息
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +18,10 @@
 <script language="javascript">
 
 $(document).ready(function(){
-  $("button").click(function(){
-    $("#div1").load("./givelike.php",q=$_SESSION["userid"]&b=$result['title'],);
-  });
+	$("button").click(function(){
+		$("#like").load("givelike.php");
+	});
 });
-
                                      
 function contentCheck(){
 	var cont=document.getElementById("cttext").value;
@@ -33,18 +37,14 @@ function contentCheck(){
 			if(contentCheck()){
 			
             var url = "./commentcl.php";
-			var comment_text = document.getElementById("cttext");
-            var params = {"a":"$_SESSION['articleid']",
-			              "b":"$_SESSION['userid']",
-						  "c":"comment_text"
-			};
-
+            var params = {
+			              "c":$("#cttext").val()
+			};			
         $.ajax({
                 "url" : url,
                 "data" : params,
                 "type" : "post",
                 "success" : function(data) {
-                    // 参数为json类型的对象
 					 alert(data);
                 },
                 "error" : function(msg) {
@@ -58,12 +58,7 @@ function contentCheck(){
     });
 </script>
 
-<div>   //个人文章展示
-     <?php require("articleDB.php ");
-	       $file_title=$_GET[file_title];
-	       GetArticle1($file_title);                       //从数据库中获取个人文章信息
-           $_SESSION['articleid']=$result[id];             //用session储存文章id信息
-     ?>
+<div>           <!--个人文章展示 -->
    <table> 
        <tr > 
             <td >博客ID号</td> 
@@ -82,11 +77,11 @@ function contentCheck(){
             <td><a href="delarticle.php">删除</a></td> </tr> 
    </table>                                                                       
    
-    <button><div id="div1">赞</div></button>        //点赞按钮(没有输出点赞数）	
+    <button><div id="div1"><p id=like>赞</p></div></button>      <!--点赞按钮(没有输出点赞数） -->  
 </div>
 
 
-<div>                                                    //评论展示
+<div>                                            <!--评论展示-->    
     <tr>
         <td >
             <tr>
@@ -112,7 +107,7 @@ function contentCheck(){
                       <tr bgcolor="#FFFFFF"> 
                         <td align="center">评论内容</td> 						
                         <td colspan="4"><?php echo $info[content]; ?></td>  
-                        <td>                                                   //管理员可以删除评论
+                        <td>                                                 <!--管理员可以删除评论-->  
 						<?php 
 						    if ($_SESSION['pow']==1){
 						?>
@@ -136,7 +131,7 @@ function contentCheck(){
     </tr>
 </div>    
 
-<div>                                            //写评论
+<div>                                  <!--写评论-->          
     评论：<input type="text" id="cttext" name="content" onchange="contentCheck();" /><br /><br />
     <input type="submit" name="submit" value="提交" /> 
 </div>

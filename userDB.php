@@ -34,6 +34,7 @@
                             else
                             {
                                       $_SESSION["id"] =$fetch["id"];
+									  $_SESSION['pow'] = $fetch["power"];
                                       unset($fetch["password"]);
                                       $res= "登陆成功！";
                             }

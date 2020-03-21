@@ -1,20 +1,21 @@
 <?php
 require './DB.php';
 session_start();
-require 'connect.php';
-function LoginCheck($_SESSION['id'])            //登陆状态检查
-{
-	if($_SESSION['id']==""){
-	echo "<script>alert('对不起，请登陆后再进行操作！');window.location.href='index.php';</script>";
-	exit();
-}
+require './connect.php';
+function LoginCheck($id){           //登陆状态检查
 
+	if($id==""){
+	echo "<script>alert('对不起，请登陆后再进行操作！');window.location.href='login.php';</script>";
+	exit();
+    }
+}
 function GetArticle($title){            //获取个人文章信息
         $sth = $conn->prepare("SELECT * FROM article WHERE `title`=:title)");
         $sth->bindParam(':title', $title);
         $sth->execute();
 		$result = $sth->fetchAll();
-        return $result ;}
+        return $result ;
+		}
 
 
 function DelArticle(){                  //删除博文
@@ -76,8 +77,7 @@ function allPaging()                    //管理员看到所有文章题目的�
 			   $message_count=$sth->columnCount();                                          
 			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
 			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
-			   $sthh = $conn->prepare("select id,title from article where author = :m order by id desc limit $offset, $page_size"); 
-			   $sthh->bindParam(':m', $userid);
+			   $sthh = $conn->prepare("select id,title from article order by id desc limit $offset, $page_size"); 
 			   $sthh->execute();
 			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
 			   $info=$sthh->fetchAll();
@@ -85,17 +85,16 @@ function allPaging()                    //管理员看到所有文章题目的�
 		             }	
 		}
 
-function comPaging($title){   //前端发来要评论的文章                                                        //评论的分页
+function comPaging($art_id){   //前端发来要评论的文章                                                        //评论的分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
 		       $sth = $conn->prepare("select count(*) as total from comment where articleid = :n order by id desc"; )  
-			   $sth->bindParam(':n', $_SESSION['articleid']);
+			   $sth->bindParam(':n', $art_id);
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
 			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
 			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
-			   $sthh = $conn->prepare("select id,title from article where author = :m order by id desc limit $offset, $page_size"); 
-			   $sthh->bindParam(':m', $userid);
+			   $sthh = $conn->prepare("select * from comment order by id desc limit $offset, $page_size"); 
 			   $sthh->execute();
 			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
 			   $info=$sthh->fetchAll();
@@ -121,21 +120,21 @@ function Write_comment($article,$userid,$content,$datetime){          //发表�
     }  
 }
 
-function giveLike($title,$ip)                                     //点赞
+function giveLike($atc_id,$ip)                                     //点赞
 {
-$sth = $conn->prepare("select loveid from article where loveid=:loveid");
+$sth = $conn->prepare("select loveid from article where loveid=:loveid"); //查询看看是否已经点赞
     $sth->bindParam(':loveid', $ip);
     $sth->execute();
 	$result = $sth->fetch(PDO::FETCH_ASSOC);
 if(empty($result)){                                       //如果没有记录点赞数加一，写入用户数据
-    $sth = $conn->prepare("update article set love=love+1 where title=:title2");  
-    $sth->bindParam(':title2', $title);
+    $sth = $conn->prepare("update article set love=love+1 where id=:title2");  
+    $sth->bindParam(':title2', $atc_id);
     $sth->execute();
-	$sthh = $conn->prepare("insert into article (loveid) values (:id)");  
-    $sthh->bindParam(':id', $id);
+	$sthh = $conn->prepare("insert into article (loveid) values (:ip)");  
+    $sthh->bindParam(':ip', $ip);
     $sthh->execute();
-	$sthhh = $conn->prepare("select love from article where title=:title");
-    $sthhh->bindParam(':title', $title);
+	$sthhh = $conn->prepare("select love from article where id=:id");
+    $sthhh->bindParam(':id', $atc_id);
     $sthhh->execute();
 	$fetch = $sth->fetch(PDO::FETCH_ASSOC);
 	$love_num=$fetch ; 

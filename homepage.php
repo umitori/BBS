@@ -15,7 +15,7 @@
 require("articleDB.php ");
 $id=$_SESSION['id'];
 LoginCheck($id);
-?>                                   //判断是否登陆
+?>                                   <!--判断是否登陆-->
 
 <script language="javascript">
 	
@@ -40,19 +40,16 @@ LoginCheck($id);
 			if(topicCheck() && contentCheck()){
 			
             var url = "./writecl.php";
-			var a = document.getElementById("topic");
-			var b = document.getElementById("cont");
-            var params = {"title":"a",
-			              "content":"b",
-						  "userid":"$_SESSION['id']"
-			};
+            var params = {"title":$("#topic").val(),
+              			  "content":$("#cont").val(),						  
+						  };			
 
         $.ajax({
                 "url" : url,
                 "data" : params,
                 "type" : "post",
                 "success" : function(data) {
-                    // 参数为json类型的对象
+            
 					 alert(data);
                 },
                 "error" : function(msg) {
@@ -67,57 +64,56 @@ LoginCheck($id);
 
 </script>
 
-<div>
+<div>             <!--发新的帖子-->
 
 	主题：<input type="text" name="title" id="topic" size="60"  width="50" onchange="topicCheck();"><br><br>
 	<font style="vertical-align:top">内容：</font><textarea name="content" id="cont" rows="10" cols="50" onchange="contentCheck();">
 	</textarea><br>
 	<input type="submit" name="submit" value="提交" id="submit" class="sub"> 
 
-</div>         //发新帖子
+</div>      
 
-<div>  //管理员可以查看所有人帖子
 <?php if ($_SESSION['pow']==1)
 {
 ?>
-<table >
+<div>             <!--管理员可以查看所有人帖子（帖子题目）,点击跳转-->
+  <table >
    <?php
-        require "articleDB.php";
+        require "./articleDB.php";
            allPaging();						 
         if($info){
            $i=1;}
         do{
    ?>
          <tr>
-           <td> <a href="myarticle.php?file_title=<?php echo $info[title];?>"><?php echo $i."、".$info[id];?><?php echo $i."、".$info[title];?></a> </td>
+           <td> <a href="myarticle.php?file_title=<?php echo $info["title"];?>"><?php echo $i."、".$info["id"];?><?php echo $i."、".$info["title"];?></a> </td>
          </tr>
    <?php 
            $i=$i+1;
         }while($stop)
    ?>
-</table>
+  </table>
+</div>
 <?php
 }
-?>
-</div>
 
-<?php else
+else
 { 
 ?>
-<div>
+<div>               <!--（如果你不是管理员）展示个人文章题目，点击跳转文章展示-->
     <tr>
         <td >
             <tr>
                 <td><table >
                     <?php
-					    require "articleDB.php";
-						Paging($_SESSION['userid']);						 
+					    require "./articleDB.php";
+						Paging($_SESSION["id"]);						 
 					  	if($info){
 						$i=1;}
 						do{
  					?>
                       <tr>
-                        <td> <a href="myarticle.php?file_title=<?php echo $info[title];?>"><?php echo $i."、".$info[id];?><?php echo $i."、".$info[title];?></a> </td>
+                        <td> <a href="myarticle.php?file_title=<?php echo $info["title"];?>"><?php echo $i."、".$info["id"];?><?php echo $i."、".$info["title"];?></a> </td>
                       </tr>
                     <?php 
 					    $i=$i+1;
@@ -127,10 +123,10 @@ LoginCheck($id);
             </tr>
         </td>
     </tr>
-</div>                           //展示个人文章题目，点击跳转文章展示
+</div>                        
 <?php
 }
-?>
+?>   
 
 
 
