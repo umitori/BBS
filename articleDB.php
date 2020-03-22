@@ -1,6 +1,4 @@
 <?php
-require './DB.php';
-session_start();
 require './connect.php';
 function LoginCheck($id){           //登陆状态检查
 
@@ -50,10 +48,10 @@ else{
 } 
 
 function Paging($userid)
-        {                                                        //分页
+        {   $page=1;                                                     //分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
-		       $sth = $conn->prepare("select count(*) as total from article where author = :n order by id desc"; )  
+		       $sth = $conn->prepare("select count(*) as total from article where author = :n order by id desc") ; 
 			   $sth->bindParam(':n', $userid);
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
@@ -64,15 +62,16 @@ function Paging($userid)
 			   $sthh->execute();
 			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
 			   $info=$sthh->fetchAll();
-			   return $info,$stop;           //返回每页文章信息和循环停止变量
+			   return $info;
+			   return $stop;           //返回每页文章信息和循环停止变量
 		             }	
 		}
 
 function allPaging()                    //管理员看到所有文章题目的分页
-        {                                                       
+        {   $page=1;                                               
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
-		       $sth = $conn->prepare("select count(*) as total from article order by id desc"; )  
+		       $sth = $conn->prepare("select count(*) as total from article order by id desc" )  ;
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
 			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
@@ -81,14 +80,16 @@ function allPaging()                    //管理员看到所有文章题目的�
 			   $sthh->execute();
 			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
 			   $info=$sthh->fetchAll();
-			   return $info,$stop;           //返回每页文章信息和循环停止变量
+			   return $info;
+			   return $stop;           //返回每页文章信息和循环停止变量
 		             }	
 		}
 
-function comPaging($art_id){   //前端发来要评论的文章                                                        //评论的分页
+function comPaging($art_id){   //前端发来要评论的文章  
+            $page=1;                                                      //评论的分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
-		       $sth = $conn->prepare("select count(*) as total from comment where articleid = :n order by id desc"; )  
+		       $sth = $conn->prepare("select count(*) as total from comment where articleid = :n order by id desc");  
 			   $sth->bindParam(':n', $art_id);
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
@@ -98,7 +99,8 @@ function comPaging($art_id){   //前端发来要评论的文章                 
 			   $sthh->execute();
 			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
 			   $info=$sthh->fetchAll();
-			   return $info,$stop;           //返回每页文章信息和循环停止变量
+			   return $info;
+			   return $stop;           //返回每页文章信息和循环停止变量
 		             }	
 		}
 		

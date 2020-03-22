@@ -15,7 +15,7 @@
 require("articleDB.php ");
 $id=$_SESSION['id'];
 LoginCheck($id);
-?>                                   <!--判断是否登陆-->
+?>                              <!--判断是否登陆-->  //可用
 
 <script language="javascript">
 	
@@ -73,7 +73,7 @@ LoginCheck($id);
 
 </div>      
 
-<?php if ($_SESSION['pow']==1)
+<?php if ($_SESSION['pow']==1) //未测试pow
 {
 ?>
 <div>             <!--管理员可以查看所有人帖子（帖子题目）,点击跳转-->
