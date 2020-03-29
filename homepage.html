@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.changer.hk/jquery/plugins/jquery.cookie.js"></script>
+    <!-- bootstrap-table -->
+    <link rel="stylesheet" href="http://code.changer.hk/bootstrap-table/1.6.0/bootstrap-table.min.css">
+    <script type="text/javascript" src="http://code.changer.hk/bootstrap-table/1.6.0/bootstrap-table.min.js"></script>
+    <style type="text/css">
+        #table {
+            padding: 0;
+        }
+            
+        #table>tbody>tr {
+            cursor: pointer;
+        }
+            
+        #table>tbody>tr>td.bs-checkbox {
+            vertical-align: middle;
+        }
+		<!--这里补充表单样式-->
+    </style>
+    <title>个人主页</title>
+</head>
+
+<body style="padding: 50px;">
+    <div class="toolbar1" style="margin-bottom: -43px;">
+         <button id="remove" class="btn btn-danger" disabled>删除</button>
+         <button class="btn btn-primary" id="btn">新建</button> <!--思考下到底在哪写文章-->
+    </div>
+    <div id="table"></div>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript">
+            var $table = $('#table'),
+			$remove = $('#remove');  //删除还没写
+
+
+            $(function() {
+                searchData();
+            });
+
+            function prepareDisplayData(data) {
+                return {
+                    total: data.data.length,
+                    fixedScroll: false,
+                    rows: data.data
+                };
+            }
+
+            function searchData() {
+                var search_url = "./atc_query.php";
+
+                $.ajax({
+                    type: "get",
+                    url: search_url,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function(data) {
+                        //测试是否可以拿到php中的数据
+                        console.log(data);
+                        //遍历这个数组
+                        if(data.resultCode == 200) {
+                            var itemArr = data.data;
+                            for(var i = 0; i < itemArr.length; i++) {
+                                var item = itemArr[i];
+                                console.log(item);
+                            }
+                        }
+
+                        //bootstrap-table 组织数据
+                        var displayData = prepareDisplayData(data);
+                        if(displayData.total > 0) {
+                            $('#table').bootstrapTable('load', displayData);
+                        } else {
+                            console.log("last page or empty.");
+                        }
+                    },
+                    error: function(data) {
+                        alert('服务器出错');
+                    },
+                });
+            }
+
+            $('#table').bootstrapTable({
+                pagination: true,
+                sidePagination: 'server', //设置为服务器端分页
+                pageNumber: 1,
+                pageSize: 10,
+                pageList: [10, 20, 50, 100],
+                showColumns: true,
+                showRefresh: true,
+                columns: [{
+                    field: 'state',
+                    checkbox: true,
+                }, {
+                    field: 'id',
+                    title: '文章Id',
+                    width: '50',
+                    align: 'center',
+                    valign: 'middle'
+                }, {
+                    field: 'title',
+                    title: '文章标题',
+                    width: '500',
+                    align: 'center',
+                    valign: 'middle'
+                }, {
+                    field: 'subtime',
+                    title: '上传时间',
+                    width: '500',
+                    align: 'center',
+                    valign: 'middle'
+                }, {
+                    field: 'love',
+                    title: '点赞数',
+                    width: '500',
+                    align: 'center',
+                    valign: 'middle'
+                }, {
+                    field: 'user_add',
+                    title: '点击前往',
+                    formatter: forwardFormatter,
+                    width: '500',
+                    align: 'center',
+                    valign: 'middle'
+                }]
+            }).on('page-change.bs.table', function(e, page, size) {
+                fillData();
+            }).on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function() {
+                var tes = !$table.bootstrapTable('getSelections').length
+				$remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+                
+            });
+
+           
+            function forwardFormatter(value, row, index) {
+                var value = "查看";
+                return "<a href='./myarticle.php" + row.id + "' class='btn btn-link'>" + value + "</a>";
+            }
+			
+
+			
+	function topicCheck(){
+	var topic=document.getElementById("topic").value;
+	if(topic!="")
+		return true;
+	else
+		alert("主题不能为空！");
+	}
+	
+	function contentCheck(){
+	var cont=document.getElementById("cont").value;
+	if(cont!="")
+		return true;
+	else
+		alert("内容不能为空！");
+	}
+
+    $(function(){
+        $("#submit").click(function(){
+			if(topicCheck() && contentCheck()){
+			
+            var url = "./writecl.php"; 
+            var params = {"title":$("#topic").val(),
+              			  "content":$("#cont").val(),						  
+						  };			
+
+        $.ajax({
+                "url" : url,
+                "data" : params,
+                "type" : "post",
+                "success" : function(data) {            
+					 alert(data);
+                },
+                "error" : function(msg) {
+                    alert(msg);
+                }
+            });
+		   }
+		   else 
+			  return false;
+        });
+    });
+        </script>
+		
+<div>             <!--发新的帖子-->
+
+	主题：<input type="text" name="title" id="topic" size="60"  width="50" onchange="topicCheck();"><br><br>
+	<font style="vertical-align:top">内容：</font><textarea name="content" id="cont" rows="10" cols="50" onchange="contentCheck();">
+	</textarea><br>
+	<input type="submit" name="submit" value="提交" id="submit" class="sub"> 
+
+</div>  
+    </body>
+</html>
