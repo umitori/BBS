@@ -1,13 +1,41 @@
-<?php
-require './connect.php';
+<?php    
+require "./BBS/config.php";
+
 function LoginCheck($id){           //登陆状态检查
 
 	if($id==""){
-	echo "<script>alert('对不起，请登陆后再进行操作！');window.location.href='login.php';</script>";
+	$loginck_res="<script>alert('对不起，请登陆后再进行操作！');window.location.href='login.php';</script>";  //这里修改了返回变量
+	echo $loginck_res;
+	
 	exit();
     }
 }
+
+function article_query($pow,$id){ 
+    $conn = new PDO(DB_DSN, DB_USER, DB_PWD);                                             
+    if ($pow==1){
+			$sth = $conn->prepare("select * from article order by id desc" ) ;
+			$sth->execute();
+			while($row = $sth->fetch()){
+                $data[] = $row;
+            }
+		return $data;
+	}
+
+    else {
+	        $sthh = $conn->prepare("select * from article where author = :author order by id desc"); 
+	        $sthh->bindParam(':author', $id);
+	        $sthh->execute();
+			while($row = $sth->fetch()){
+                $data[] = $row;
+            }
+		return $data;
+	}
+
+}	
+
 function GetArticle($title){            //获取个人文章信息
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
         $sth = $conn->prepare("SELECT * FROM article WHERE `title`=:title)");
         $sth->bindParam(':title', $title);
         $sth->execute();
@@ -17,6 +45,7 @@ function GetArticle($title){            //获取个人文章信息
 
 
 function DelArticle(){                  //删除博文
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
 	    $sth = $conn->prepare("delete from article where author = :author");
         $sth->bindParam(':author', $_SESSION['useid']);
 		$sth->execute();
@@ -29,6 +58,7 @@ function DelArticle(){                  //删除博文
 
 
 function Write($title,$content,$author,$now){          //发表文章
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
 	    $sth = $conn->prepare("INSERT INTO `article`
                                     ('title','content','author','subtime')
                                     VALUES (:title,:content,:author,:subtime)");
@@ -46,46 +76,53 @@ else{
 }      
 
 } 
-
+/*都得改
+function allPaging()                    //管理员看到所有文章题目的分页
+        {   $page=1;       
+            $conn = new PDO(DB_DSN, DB_USER, DB_PWD);		
+          if ($page){
+			   $page_size=20;     //每页最多显示20条记录
+		       $sth=$conn->prepare("select count(*) as total from article order by id desc" )  ;
+			   $sth->execute();
+			   $message_count=$sth->columnCount();                                          
+			   $page_count2=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
+			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
+			   $sthh = $conn->prepare("select id,title from article order by id desc limit $offset, $page_size"); 
+			   $sthh->execute();
+			   $stop2=$sthh->columnCount();    //limit检索第n页开始的记录条数
+			   $info2=$sthh->fetchAll();
+			   return $info2;
+			   return $stop2;
+			   return $page_count2;  //返回每页文章信息和循环停止变量、总页数
+		             }	
+		}
+		
 function Paging($userid)
         {   $page=1;                                                     //分页
+		    $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
 		       $sth = $conn->prepare("select count(*) as total from article where author = :n order by id desc") ; 
 			   $sth->bindParam(':n', $userid);
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
-			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
+			   $page_count1=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
 			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
 			   $sthh = $conn->prepare("select id,title from article where author = :m order by id desc limit $offset, $page_size"); 
 			   $sthh->bindParam(':m', $userid);
 			   $sthh->execute();
-			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
-			   $info=$sthh->fetchAll();
-			   return $info;
-			   return $stop;           //返回每页文章信息和循环停止变量
+			   $stop1=$sthh->columnCount();    //limit检索第n页开始的记录条数
+			   $info1=$sthh->fetchAll();
+			   return $info1;
+			   return $stop1;           
+			   return $page_count1;  //返回每页文章信息和循环停止变量、总页数
 		             }	
 		}
 
-function allPaging()                    //管理员看到所有文章题目的分页
-        {   $page=1;                                               
-          if ($page){
-			   $page_size=20;     //每页最多显示20条记录
-		       $sth = $conn->prepare("select count(*) as total from article order by id desc" )  ;
-			   $sth->execute();
-			   $message_count=$sth->columnCount();                                          
-			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
-			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
-			   $sthh = $conn->prepare("select id,title from article order by id desc limit $offset, $page_size"); 
-			   $sthh->execute();
-			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
-			   $info=$sthh->fetchAll();
-			   return $info;
-			   return $stop;           //返回每页文章信息和循环停止变量
-		             }	
-		}
+
 
 function comPaging($art_id){   //前端发来要评论的文章  
+            $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
             $page=1;                                                      //评论的分页
           if ($page){
 			   $page_size=20;     //每页最多显示20条记录
@@ -93,18 +130,20 @@ function comPaging($art_id){   //前端发来要评论的文章
 			   $sth->bindParam(':n', $art_id);
 			   $sth->execute();
 			   $message_count=$sth->columnCount();                                          
-			   $page_count=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
+			   $page_count3=ceil($message_count/$page_size);	  //根据记录总数除以每页显示的记录数求出所分的页数
 			   $offset=($page-1)*$page_size;			      //计算下一页从第几条数据开始循环  
 			   $sthh = $conn->prepare("select * from comment order by id desc limit $offset, $page_size"); 
 			   $sthh->execute();
-			   $stop=$sthh->columnCount();    //limit检索第n页开始的记录条数
-			   $info=$sthh->fetchAll();
-			   return $info;
-			   return $stop;           //返回每页文章信息和循环停止变量
+			   $stop3=$sthh->columnCount();    //limit检索第n页开始的记录条数
+			   $info3=$sthh->fetchAll();
+			   return $info3;
+			   return $stop;
+			   return $page_count3;  //返回每页文章信息和循环停止变量、总页数
 		             }	
 		}
-		
+*/		
 function Write_comment($article,$userid,$content,$datetime){          //发表评论
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
 	    $sth = $conn->prepare("INSERT INTO `comment`
                                     ('article','userid','content','datetime')
                                     VALUES (:article,:userid,:content,:datetime)");
@@ -124,7 +163,8 @@ function Write_comment($article,$userid,$content,$datetime){          //发表�
 
 function giveLike($atc_id,$ip)                                     //点赞
 {
-$sth = $conn->prepare("select loveid from article where loveid=:loveid"); //查询看看是否已经点赞
+	$conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+    $sth = $conn->prepare("select loveid from article where loveid=:loveid"); //查询看看是否已经点赞
     $sth->bindParam(':loveid', $ip);
     $sth->execute();
 	$result = $sth->fetch(PDO::FETCH_ASSOC);
@@ -149,6 +189,7 @@ else{
 
 function delComment($id)
 {
+	$conn = new PDO(DB_DSN, DB_USER, DB_PWD);
 	    $sth = $conn->prepare("delete from comment where id = :id");
         $sth->bindParam(':id', $id);
 		$sth->execute();
@@ -160,7 +201,9 @@ function delComment($id)
 }
 
 function rewrite($content)
-{	    $sth = $conn->prepare("UPDATE article set content=:content where id=:id");
+{	    
+    $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+        $sth = $conn->prepare("UPDATE article set content=:content where id=:id");
         $sth->bindParam(':content', $content);
 		$sth->bindParam(':id', $id);
 		$sth->execute();
