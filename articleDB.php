@@ -34,6 +34,55 @@ function article_query($pow,$id){
 
 }	
 
+function del_row($rowId){
+
+    $conn = new PDO(DB_DSN, DB_USER, DB_PWD); 
+    $sth = $conn->prepare("delete from article where id=:articleid"); 	
+    $sth->bindParam(':articleid', $rowId);
+	$sth->execute();  
+    
+	$sthh = $conn->prepare("select * from article where id=:articleid"); 	
+    $sthh->bindParam(':articleid', $rowId);
+	$sthh->execute();  
+	$fetch = $sthh->columnCount();
+		if($fetch){
+			echo "<script>alert('博客文章已被删除!');</script>";
+		}
+		else{
+           echo "<script>alert('删除失败!');history.go(-1);</script>";
+        }
+
+}
+
+function Write($title,$content,$author,$now){          //发表文章
+
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+	    $sth = $conn->prepare("INSERT INTO article
+                                    (title,content,author,subtime)
+                                    VALUES (:title,:content,:author,:subtime)");
+        $sth->bindParam(':title', $title);
+		$sth->bindParam(':content', $content);
+		$sth->bindParam(':author', $author);
+		$sth->bindParam(':subtime', $now);
+        $sth->execute();
+		
+        $sthh = $conn->prepare("select * from article where title=:title1 and content=:content1 and author=:author1 and subtime=:subtime1 "); 	
+        $sthh->bindParam(':title1', $title);
+		$sthh->bindParam(':content1', $content);
+		$sthh->bindParam(':author1', $author);
+		$sthh->bindParam(':subtime1', $now);
+	    $sthh->execute();  
+	    $result = $sthh->columnCount();
+
+if($result){
+	echo "<script>alert('文章发表成功!');window.location.href='homepage.html';</script>";
+}
+else{
+	echo "<script>alert('操作失败!');window.location.href='homepage.html';</script>";
+}                                           
+}
+//这上面的可用
+
 function GetArticle($title){            //获取个人文章信息
         $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
         $sth = $conn->prepare("SELECT * FROM article WHERE `title`=:title)");
@@ -57,25 +106,10 @@ function DelArticle(){                  //删除博文
 }
 
 
-function Write($title,$content,$author,$now){          //发表文章
-        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-	    $sth = $conn->prepare("INSERT INTO `article`
-                                    ('title','content','author','subtime')
-                                    VALUES (:title,:content,:author,:subtime)");
-        $sth->bindParam(':title', $title);
-		$sth->bindParam(':content', $content);
-		$sth->bindParam(':author', $author);
-		$sth->bindParam(':subtime', $now);
-        $sth->execute();
-		$result=$sth->columnCount();
-if($result){
-	echo "<script>alert('文章发表成功!');window.location.href='index.php';</script>";
-}
-else{
-	echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
-}      
+    
 
 } 
+
 /*都得改
 function allPaging()                    //管理员看到所有文章题目的分页
         {   $page=1;       

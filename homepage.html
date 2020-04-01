@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  <!--测试后个人主页可用，加上learn_ajax.php+text6。php-->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -45,8 +45,56 @@
 <!-- Latest compiled and minified Locales -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript">
-            var $table = $('#table'),
-			$remove = $('#remove');  //删除还没写
+            
+	var $table = $('#table'),
+	$remove = $('#remove');
+	
+    $(function() {
+	
+        delData();		
+
+    });
+	
+$(document).ready(function(){
+    $("#div123").hide();
+
+  $("button").click(function(){
+    $("#div123").show();
+  });
+});
+
+
+    function delData() {                  //删除功能
+         $remove.on('click', function() {
+            if(confirm("确定要删除所选的文章吗？")) {
+                var rows = $.map($table.bootstrapTable('getSelections'), function(row) { //这里是这个组件的固定语法,返回选中的行的索引号
+                    return row.id;
+                });
+            }
+                    
+            $.map($table.bootstrapTable('getSelections'),function(row){
+                var del_url = "./delarticle.php";                      
+                var rowId = row.id;
+                        
+                $.ajax({
+                    type:"delete",
+                    url:del_url + "?rowId=" + rowId,
+                    dataType:"html",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function(data) {
+                        $table.bootstrapTable('remove',{
+                            field: 'id',
+                            values: rows
+                        });
+                        $remove.prop('disabled', true);
+                    },
+                    error:function(data){
+                        alert('删除失败！');
+                    }
+                });
+            });
+        })
+    }  
 
 
             $(function() {
@@ -147,10 +195,10 @@
             });
 
            
-            function forwardFormatter(value, row, index) {
-                var value = "查看";
-                return "<a href='./myarticle.php" + row.id + "' class='btn btn-link'>" + value + "</a>";
-            }
+    function forwardFormatter(value, row, index) {
+        var value = "查看";
+        return "<a href='./myarticle.php" + row.id + "' class='btn btn-link'>" + value + "</a>";
+    }
 			
 
 			
@@ -174,7 +222,7 @@
         $("#submit").click(function(){
 			if(topicCheck() && contentCheck()){
 			
-            var url = "./writecl.php"; 
+            var url = "./writecl.php";
             var params = {"title":$("#topic").val(),
               			  "content":$("#cont").val(),						  
 						  };			
@@ -197,7 +245,7 @@
     });
         </script>
 		
-<div>             <!--发新的帖子-->
+<div id="div123">             <!--发新的帖子-->
 
 	主题：<input type="text" name="title" id="topic" size="60"  width="50" onchange="topicCheck();"><br><br>
 	<font style="vertical-align:top">内容：</font><textarea name="content" id="cont" rows="10" cols="50" onchange="contentCheck();">

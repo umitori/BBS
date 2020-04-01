@@ -1,4 +1,5 @@
 <?php
 require "articleDB.php";
-DelArticle();
+$rowId = $_GET['rowId'];//获取参数
+del_row($rowId);
 ?>
