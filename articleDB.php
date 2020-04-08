@@ -26,7 +26,7 @@ function article_query($pow,$id){
 	        $sthh = $conn->prepare("select * from article where author = :author order by id desc"); 
 	        $sthh->bindParam(':author', $id);
 	        $sthh->execute();
-			while($row = $sth->fetch()){
+			while($row = $sthh->fetch()){
                 $data[] = $row;
             }
 		return $data;
@@ -83,14 +83,27 @@ else{
 }
 //这上面的可用
 
-function GetArticle($title){            //获取个人文章信息
+function GetArticle($id){            //获取个人文章信息
         $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-        $sth = $conn->prepare("SELECT * FROM article WHERE `title`=:title)");
-        $sth->bindParam(':title', $title);
+        $sth = $conn->prepare("SELECT * FROM article WHERE `id`=:id)");
+        $sth->bindParam(':id', $id);
         $sth->execute();
-		$result = $sth->fetchAll();
-        return $result ;
-		}
+		while($row = $sth->fetch()){
+                $data[] = $row;
+            }
+		return $data;
+		}	  
+		
+function GetComment($id){            //获取个人文章评论信息
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+        $sth = $conn->prepare("SELECT * FROM comment WHERE `articleid`=:id)");
+        $sth->bindParam(':id', $id);
+        $sth->execute();
+		while($row = $sth->fetch()){
+                $data1[] = $row;
+            }
+		return $data1;
+		}	
 
 
 function DelArticle(){                  //删除博文

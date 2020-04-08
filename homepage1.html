@@ -1,0 +1,123 @@
+<!DOCTYPE html >   <!--不是管理员的个人主页-->
+<html>
+<head>
+	<title> 不是管理员的个人主页 </title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" /> 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+	<!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.changer.hk/jquery/plugins/jquery.cookie.js"></script>
+</head>
+<body>
+    
+	<div class="ui_tab">        <!-- 具体消息内容 -->
+	
+	</div>
+	
+	<div class="paging">         <!-- 分页布局-->
+		<table>
+			<tr class="page-font">
+				<td><input type="button" class="firstPage" value="首页" οnclick="page_click(this)"></td>
+				<td><input type="button" class="beforePage" value="上一页" οnclick="page_click(this)"></td>
+				<td>&nbsp;&nbsp;|&nbsp;第<input type="button" class="currentPage" value="1" readonly="readonly">页</td>
+				<td>&nbsp;&nbsp;&nbsp;共<input type="button" class="totalPage" value="1" readonly="readonly">页&nbsp;|&nbsp;&nbsp;</td>
+				<td><input type="button" class="nextPage" value="下一页" οnclick="page_click(this)"></td>
+				<td><input type="button" class="lastPage" value="尾页" οnclick="page_click(this)"></td>
+			</tr>			
+		</table>
+	</div>
+	
+	<script type="text/javascript">
+		var totalPage = 10; //一共多少页
+		var currentPage = 1;//当前页码,后面的js函数会改变这个值
+		var information_lenght = []
+		var search_url = "./act_query.php";
+		//前端获取后台数据并呈现方法
+		function information_display() {			
+			    $.ajax({
+                    type: "get",
+                    url: search_url,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function(data) {
+                        //测试是否可以拿到php中的数据
+                        console.log(data);
+                        //遍历这个数组
+						
+			        $(".ui_tab").empty()
+					var itemArr = data.data;
+			        $.each(itemArr, function (index, n) {
+				    var infor_title = "<table>"
+					+ "<tr >"
+					+ "<td>" + n.id + "</td>"
+					+ "<td>" + n.title + "</td>"
+					+ "<td>" + n.subtime + "</td>"
+					+ "<td>" + n.love + "</td>"
+					+ "<td>" + "<a href='./beforemt.php" + n.id + "'>" + "点击查看" + "</a>" + "</td>"
+					+ "</tr>"
+					+ "</table>";
+				    $(".ui_tab").append(infor_title) //将信息插入ui-tab区域
+			        })
+                    },
+					
+                    error: function(data) {
+                        alert('服务器出错');
+                    },
+                });																																	
+		}
+		
+		//初始化加载，分页首页数据，输入：每页多少条数据，当前页（默认为1,单击可修改）；输出：当前页数据和总页数
+		
+
+		window.onload = function () {
+			$(".totalPage").attr("value", totalPage)
+			information_display();
+		}
+
+
+		//上一页、下一页，首页和尾页的单击触发事件
+		function page_click(item) {
+			console.log(item)
+			//首页，$(item).attr("class") == "firstPage"这里获取所选的class值，然后判断选择
+			if ($(item).attr("class") == "firstPage") {
+				console.log("firstPage")
+				pageNumber = parseInt($(".currentPage").attr("value"));
+				$(".currentPage").attr("value", 1)
+			}
+			//上一页
+			else if ($(item).attr("class") == "beforePage") {
+				console.log("beforePage")
+				pageNumber = parseInt($(".currentPage").attr("value"));
+				if (pageNumber > 1) {
+					$(".currentPage").attr("value", pageNumber - 1)
+					information_display();
+				}
+				else {
+					$(".beforePage").attr("disabled", false)
+				}
+			}
+			//下一页
+			else if ($(item).attr("class") == "nextPage") {
+				console.log("nextPage")
+				pageNumber = parseInt($(".currentPage").attr("value"));
+				if (pageNumber < totalPage) {
+					$(".currentPage").attr("value", pageNumber + 1)
+					information_display();
+				}
+				else {
+					$(".nextPage").attr("disabled", false)
+				}
+			}
+			//尾页
+			else {
+				console.log("lastPage")
+				pageNumber = parseInt($(".currentPage").attr("value"));
+				$(".currentPage").attr("value", totalPage)
+			}
+		}
+	</script>
+</body>
+</html>
