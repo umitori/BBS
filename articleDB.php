@@ -34,7 +34,7 @@ function article_query($pow,$id){
 
 }	
 
-function del_row($rowId){
+function del_row($rowId){       //删除文章
 
     $conn = new PDO(DB_DSN, DB_USER, DB_PWD); 
     $sth = $conn->prepare("delete from article where id=:articleid"); 	
@@ -74,38 +74,91 @@ function Write($title,$content,$author,$now){          //发表文章
 	    $sthh->execute();  
 	    $result = $sthh->columnCount();
 
-if($result){
-	echo "<script>alert('文章发表成功!');window.location.href='homepage.html';</script>";
+    if($result){
+	    echo "<script>alert('文章发表成功!');window.location.href='homepage.html';</script>";
+    }
+    else{
+	    echo "<script>alert('操作失败!');window.location.href='homepage.html';</script>";
+    }                                           
 }
-else{
-	echo "<script>alert('操作失败!');window.location.href='homepage.html';</script>";
-}                                           
-}
-//这上面的可用
+
 
 function GetArticle($id){            //获取个人文章信息
         $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-        $sth = $conn->prepare("SELECT * FROM article WHERE `id`=:id)");
+        $sth = $conn->prepare("SELECT * FROM article WHERE id=:id");
         $sth->bindParam(':id', $id);
         $sth->execute();
+		$fetch = $sth->fetch(PDO::FETCH_ASSOC);
+		$_SESSION["a_id"] =$fetch["id"];
 		while($row = $sth->fetch()){
-                $data[] = $row;
+                $data[] = $row;				
             }
 		return $data;
 		}	  
 		
 function GetComment($id){            //获取个人文章评论信息
         $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-        $sth = $conn->prepare("SELECT * FROM comment WHERE `articleid`=:id)");
+        $sth = $conn->prepare("SELECT * FROM comment WHERE articleid =:id");
         $sth->bindParam(':id', $id);
         $sth->execute();
 		while($row = $sth->fetch()){
                 $data1[] = $row;
             }
 		return $data1;
-		}	
+		}
+				
+//这上面的可用
+function delComment($id){
+	$conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+	    $sth = $conn->prepare("delete from comment where id = :id");
+        $sth->bindParam(':id', $id);
+		$sth->execute();
+		
+	    $sthh = $conn->prepare("select * from article where id=:articleid"); 	
+        $sthh->bindParam(':articleid', $rowId);
+	    $sthh->execute();  
+	    $fetch = $sthh->columnCount();
+		if($fetch){
+			echo "<script>alert('博客文章已被删除!');</script>";
+		}
+		else{
+           echo "<script>alert('删除失败!');history.go(-1);</script>";
+        }
+} 
 
+function rewrite($content,$id){	    
+    $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+        $sth = $conn->prepare("UPDATE article set content=:content where id=:id");
+        $sth->bindParam(':content', $content);
+		$sth->bindParam(':id', $id);
+		$sth->execute();
+	    $fetch = $sth->fetch(PDO::FETCH_ASSOC);
+		if($fetch)
+			echo "<script>alert('博客文章已修改!');location='myarticle.php';</script>";
+		else
+           echo "<script>alert('修改失败!');history.go(-1);</script>";
+}
 
+function Write_comment($articleid,$userid,$content,$datetime){          //发表评论
+        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
+	    $sth = $conn->prepare("INSERT INTO `comment`
+                                    ('articleid','userid','content','datetime')
+                                    VALUES (:articleid,:userid,:content,:datetime)");
+        $sth->bindParam(':articleid', $articleid);
+		$sth->bindParam(':userid', $userid);
+		$sth->bindParam(':content', $content);
+		$sth->bindParam(':datetime', $datetime);
+        $sth->execute();
+		$result=$sth->columnCount();
+    if($result){
+	    echo "<script>alert('评论发表成功!');window.location.href='index.php';</script>";
+    }
+    else{
+	    echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
+    }  
+}
+
+/*都得改
 function DelArticle(){                  //删除博文
         $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
 	    $sth = $conn->prepare("delete from article where author = :author");
@@ -118,12 +171,6 @@ function DelArticle(){                  //删除博文
            echo "<script>alert('删除失败!');history.go(-1);</script>";
 }
 
-
-    
-
-} 
-
-/*都得改
 function allPaging()                    //管理员看到所有文章题目的分页
         {   $page=1;       
             $conn = new PDO(DB_DSN, DB_USER, DB_PWD);		
@@ -189,24 +236,7 @@ function comPaging($art_id){   //前端发来要评论的文章
 		             }	
 		}
 */		
-function Write_comment($article,$userid,$content,$datetime){          //发表评论
-        $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-	    $sth = $conn->prepare("INSERT INTO `comment`
-                                    ('article','userid','content','datetime')
-                                    VALUES (:article,:userid,:content,:datetime)");
-        $sth->bindParam(':article', $article);
-		$sth->bindParam(':userid', $userid);
-		$sth->bindParam(':content', $content);
-		$sth->bindParam(':datetime', $datetime);
-        $sth->execute();
-		$result=$sth->columnCount();
-    if($result){
-	    echo "<script>alert('评论发表成功!');window.location.href='index.php';</script>";
-    }
-    else{
-	    echo "<script>alert('操作失败!');window.location.href='index.php';</script>";
-    }  
-}
+
 
 function giveLike($atc_id,$ip)                                     //点赞
 {
@@ -234,30 +264,7 @@ else{
 	}
 }
 
-function delComment($id)
-{
-	$conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-	    $sth = $conn->prepare("delete from comment where id = :id");
-        $sth->bindParam(':id', $id);
-		$sth->execute();
-	    $fetch = $sth->fetch(PDO::FETCH_ASSOC);
-		if($fetch)
-			echo "<script>alert('博客文章已被删除!');location='$_SERVER[HTTP_REFERER]';</script>";
-		else
-           echo "<script>alert('删除失败!');history.go(-1);</script>";	
-}
 
-function rewrite($content)
-{	    
-    $conn = new PDO(DB_DSN, DB_USER, DB_PWD);
-        $sth = $conn->prepare("UPDATE article set content=:content where id=:id");
-        $sth->bindParam(':content', $content);
-		$sth->bindParam(':id', $id);
-		$sth->execute();
-	    $fetch = $sth->fetch(PDO::FETCH_ASSOC);
-		if($fetch)
-			echo "<script>alert('博客文章已修改!');location='myarticle.php';</script>";
-		else
-           echo "<script>alert('修改失败!');history.go(-1);</script>";
-}
+
+
 ?>
