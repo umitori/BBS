@@ -13,33 +13,35 @@
 </head>
 <body>
     
-<div class="s_article"></div>
-<button id="del">删除该文章</button>
+<div class="s_article"></div> <!--展示文章内容-->
+
+<button id="del">删除该文章</button><br>
+ <input id="reww" value="输入内容修改文章内容">
 <button id="rew">修改文章</button>
-<div class="s_comment"></div>
-<button id="com">回复评论</button>
+<div class="s_comment"></div>  <!--展示评论内容-->
+ <input id="comm" value="输入内容评论">
+<button id="com">回复评论</button><br>
 <button id="del_com">删除评论</button>
 
 	
 <script type="text/javascript">
 		var search_url = "./beforemt.php";
-		var aId = window.location.href.split('article_id=')[1];
+		var aId1 = window.location.href.split('article_id=')[1];
 		
-		//前端获取后台数据并呈现方法
+		//前端获取后台数据并呈现(但是不知道为什么测试的时候获取了数据，却呈现失败！！)
 		function information_display() {
                   //alert (aId);	测试是否获取了参数	
+			var dataParam = {
+                aId: aId1
+            };	
 			    $.ajax({
                     type: "get",
                     url: search_url,
-                    dataType: 'json',
-					data: aId,
+					data: dataParam,
+					dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     success: function(data) {
-                        //测试是否可以拿到php中的数据
-                        console.log(data);
-                        //遍历这个数组
-						
-			       
+	       
 					var itemArr = data.data;  
 					var itemArr1 = data.data1;   //分别获得文章和评论信息
 			    $.each(itemArr, function (index, n) {
@@ -50,16 +52,16 @@
 					+ "<td>" + n.id + "</td>"
 					+ "<td>" + n.title + "</td>"
 					+ "<td>" + n.subtime + "</td>"
-					+ "<td>" + n.love + "</td>"
+					+ "<td>" + "<button id='like'>" + "赞" + n.love + "</button>" + "</td>"
 					+ "<td>" + n.content + "</td>"	
                    // + "<td>" + "<a href='./delarticle.php?article_id="+n.id + "'>" + "删除" + "</a>" + "</td>"					
 					+ "</tr>"
 					+ "</table>";					
 					
 				    $(".s_article").append(article)  //将信息插入相应区域			       															
-			        })
+			      })
 					
-				$.each(itemArr1, function (index, m) {
+				$.each(itemArr1, function (index, m){
 					
 					$(".s_comment").empty()					
 					var comment = "<table>"
@@ -71,11 +73,10 @@
                   //  + "<td>" + "<a href='./del_comment.php?article_id="+m.id + "'>" + "删除" + "</a>" + "</td>"						
 					+ "</tr>"
 					+ "</table>";
-					
+					return mid = m.id;
 					$(".s_comment").append(comment) //将信息插入相应区域			       															
-			        })										
-																			
-					
+			      })										
+																								
                     },
 					
                     error: function(msg) {
@@ -90,18 +91,19 @@
 		}
 		
 $(document).ready(function(){
+        var action_url="./myatc_cl.php";
     //不同的按钮执行不同动作
     $("#del").click(function(){   
         var dataParam = {
-                action: "delete_article"
+                action: "delete_article",
+				aId: aId1
             };			
-		var action_url: "./myatc_cl.php";
-		
+				
 		$.ajax({
             type: "get",
             url: action_url,
 			data: dataParam,
-            dataType: 'json',
+
             contentType: 'application/json; charset=utf-8',
             success: function(data){
 				alert(data);
@@ -114,15 +116,16 @@ $(document).ready(function(){
 	
 	$("#rew").click(function(){
         var dataParam = {
-                action: "rewrite"
-            };
-		var action_url: "./myatc_cl.php";
+                action: "rewrite",
+				content:$("#reww").val(),
+                aId: aId1				
+            };		
 		
 		$.ajax({
             type: "get",
             url: action_url,
 			data: dataParam,
-            dataType: 'json',
+
             contentType: 'application/json; charset=utf-8',
             success: function(data){
 				alert(data);
@@ -133,17 +136,19 @@ $(document).ready(function(){
         });	
     });
 	
+
 	$("#com").click(function(){
         var dataParam = {
-                action: "write_comment"
+                action: "write_comment",				
+				wcontent:$("#comm").val(),
+				aId: aId1
             };
-		var action_url: "./myatc_cl.php";
 		
 		$.ajax({
             type: "get",
             url: action_url,
 			data: dataParam,
-            dataType: 'json',
+
             contentType: 'application/json; charset=utf-8',
             success: function(data){
 				alert(data);
@@ -152,19 +157,41 @@ $(document).ready(function(){
                 alert(msg);
             },
         });	
+
     });	
 
 	$("#del_com").click(function(){
         var dataParam = {
-                action: "delete_comment"
+                action: "delete_comment",
+				comid:mid   
             };
-		var action_url: "./myatc_cl.php";
 		
 		$.ajax({
             type: "get",
             url: action_url,
 			data: dataParam,
-            dataType: 'json',
+
+            contentType: 'application/json; charset=utf-8',
+            success: function(data){
+				alert(data);
+            },					
+            error: function(msg){
+                alert(msg);
+            },
+        });	
+    });
+
+	$("#like").click(function(){
+        var dataParam = {
+                action: "give_like",
+				aId: aId1 
+            };
+		
+		$.ajax({
+            type: "get",
+            url: action_url,
+			data: dataParam,
+
             contentType: 'application/json; charset=utf-8',
             success: function(data){
 				alert(data);

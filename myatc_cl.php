@@ -1,28 +1,32 @@
 <?php    
-include "./articleDB.php";
-
-$aId = $_SESSION["a_id"];
-$userid = $_SESSION["id"];
-
-$content = $_GET['content'];   //未写
-$wcontent = $_GET['wcontent'];  //未写
-$datetime = date("Y-m-d H:i:s"); 
-$comid = $_GET['comid'];  //未写
-
+require("./articleDB.php ");
+ 
+$userid = $_SESSION["id"];    
+$datetime = date("Y-m-d H:i:s");  
 $action = $_GET['action'];//获取动作
+
     switch($action) {
         case 'delete_article':
-            del_row($aId)
+		    $aId = $_GET["aId"]; 
+            del_row($aId);
             break;
         case 'rewrite':
-            rewrite($content,$aId)
+		    $content = $_GET['content'];
+			$aId = $_GET["aId"]; 
+            rewrite($content,$aId)	;		
             break;
         case 'write_comment':
-            Write_comment($aId,$userid,$wcontent,$datetime)
+		    $wcontent = $_GET['wcontent']; 
+			$aId = $_GET["aId"]; 
+            Write_comment($aId,$userid,$wcontent,$datetime);			
             break;
         case 'delete_comment':
-            delComment($comid)
+		    $comid = $_GET['comid'];
+            delComment($comid);
             break;
-    }
-	
+		case 'give_like':
+		    $aId = $_GET["aId"]; 
+            giveLike($aId,$userid);
+            break;
+    }	
 ?> 
